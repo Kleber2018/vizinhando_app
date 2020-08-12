@@ -4,10 +4,6 @@ import { Usuario } from 'src/app/shared/model/usuario.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 
-import { SidenavItem } from '../../shared/model/sidenav-item.model';
-import { SidenavItemFactory } from '../../shared/factory/sidenav-item.factory';
-
-
 @Component({
   selector: 'app-dash',
   templateUrl: './dash.component.html',
@@ -18,7 +14,6 @@ export class DashComponent implements OnInit {
 
   private end: Subject<boolean> = new Subject();
 
-  public sidenavItems: SidenavItem[] = [];
   public usuario: Usuario;
 
   //executa uma vez no carregamento da página
@@ -36,9 +31,9 @@ export class DashComponent implements OnInit {
     : null;
 
     if (this.usuario) {
-      this.sidenavItems = SidenavItemFactory.buildSidenav();
+      // logado ok
     } else {
-      this.authenticationService.logout();
+      // this.authenticationService.logout();
     }
   }
 

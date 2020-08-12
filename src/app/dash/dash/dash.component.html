@@ -1,13 +1,11 @@
-<app-layout
-  [sidenavItems]="sidenavItems">
+<app-layout>
   <main class="main">
     <section fxFlex="100%" fxLayout="column">
       <h3>/Dashboard</h3>
-      <h3 style="padding-left: 20px; margin-top: 10px;">Olá {{usuario.nome}}</h3>
+      <h3 style="padding-left: 20px; margin-top: 10px;" *ngIf="usuario">Olá {{usuario.nome}}</h3>
     
     </section>  
   </main>
 </app-layout>
     
 <app-footer></app-footer>
-  
