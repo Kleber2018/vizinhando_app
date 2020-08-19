@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 /**Third party modules.*/
 import { AngularFireAuth } from '@angular/fire/auth';
 import {HttpClient} from "@angular/common/http";
+import {tryCatch} from "rxjs/internal-compatibility";
 
 
 @Injectable({
@@ -21,28 +22,39 @@ export class AuthenticationService {
     this.apiURL = 'http://localhost:3333';
   }
 
-  public login(eMail: string, password: string): boolean {
+  public login(eMail: string, password: string): Promise<any>  {
    const autenticacao = {
       "email": eMail,
         "senha": password
     }
-    console.log('http', this.apiURL, autenticacao)
-    this.http.post(`${this.apiURL}/session`, autenticacao)
-        .subscribe(
-            resultado => {
-              console.log('retorno', resultado)
-            },
-            erro => {
-              console.log('retorno', erro);
-              if(erro.status == 400) {
-                console.log(erro);
-              }
-            }
-        );
+    try {
+        return this.http.post(`${this.apiURL}/session`, autenticacao).toPromise();
+    } catch (e) {}
+
+   }
+    //   try {
+    //       return this.http.post(`${this.apiURL}/session`, autenticacao)
+    //
+    //     .toPromise().then(
+    //         resultado => {
+    //              console.log('retorno', resultado)
+    //             return resultado
+    //         },
+    //     ).catch(
+    //         erro => {
+    //     console.log('retorno 2 erro', erro);
+    //     if(erro.status == 400) {
+    //         console.log(erro);
+    //     }
+    //     return erro
+    // });
+    //   } catch (e) {
+    //    console.log('teste', e)
+    //
+    //   }
 
     // this.router.navigate(['/user']);
-    return true;
-  }
+  // }
 
   // public login(eMail: string, password: string): Promise<firebase.auth.UserCredential> {
   //   return this.angularFireAuth.auth.signInWithEmailAndPassword(eMail, password);

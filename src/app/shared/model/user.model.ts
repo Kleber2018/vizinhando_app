@@ -15,3 +15,4 @@ export interface User {
     role?: string; // user ou admin
     createdAt?: any;
  }
+

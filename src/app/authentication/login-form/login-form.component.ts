@@ -59,14 +59,14 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   private buildFormLogin(): void {
     this.formLogin = this.formBuilder.group({
-      eMail: ['', [ Validators.required, Validators.email ]],
+      eMail: ['klebers@alunos.utfpr.edu.br', [ Validators.required, Validators.email ]],
       password: ['', [ Validators.required ]]
     });
   }
 
   private getUsuarioByEMail(eMail: string): void {
 
-    console.log('buscando usuario')
+    console.log('implementar buscar usuário')
     // this.usuarioService
     //   .getUsuarioByEMail(eMail.toLowerCase())
     //   .pipe(takeUntil(this.end))
@@ -84,8 +84,16 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   private login(eMail: string, password: string): void {
-    this.authenticationService.login(eMail.toLowerCase(), password)
-
+    try {
+      this.authenticationService.login(eMail.toLowerCase(), password).then(r => {
+        console.log('retorno login', r);
+        this.getUsuarioByEMail(eMail.toLowerCase());
+      }).catch(error => {
+            console.log(error.error.error)
+            this.formLogin.get('password').setValue('');
+          }
+      )
+    }  catch (e) {}
   }
 
   // private login(eMail: string, password: string): void {
@@ -104,9 +112,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   // }
 
   public submitFormLogin(): void {
-
     if (this.formLogin.valid) {
-      console.log('submetendo')
       this.login(
         this.formLogin.get('eMail').value,
         this.formLogin.get('password').value
