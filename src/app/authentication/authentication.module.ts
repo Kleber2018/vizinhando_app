@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LoginFormComponent } from './login-form/login-form.component';
 
 import { EsqueciSenhaDialogComponent } from './login-form/esqueci-senha-dialog/esqueci-senha-dialog.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EsqueciSenhaDialogComponent } from './login-form/esqueci-senha-dialog/e
     CommonModule,
     ReactiveFormsModule,
     AuthenticationRoutingModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ]
 })
 export class AuthenticationModule { }

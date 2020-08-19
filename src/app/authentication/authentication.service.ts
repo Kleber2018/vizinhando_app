@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 /**Third party modules.*/
 import { AngularFireAuth } from '@angular/fire/auth';
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
@@ -10,13 +11,36 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class AuthenticationService {
 
+  readonly apiURL : string;
+
   constructor(
     // private angularFireAuth: AngularFireAuth,
+    private http : HttpClient,
     private router: Router
-  ) { }
+  ) {
+    this.apiURL = 'http://localhost:3333';
+  }
 
   public login(eMail: string, password: string): boolean {
-    this.router.navigate(['/user']);
+   const autenticacao = {
+      "email": eMail,
+        "senha": password
+    }
+    console.log('http', this.apiURL, autenticacao)
+    this.http.post(`${this.apiURL}/session`, autenticacao)
+        .subscribe(
+            resultado => {
+              console.log('retorno', resultado)
+            },
+            erro => {
+              console.log('retorno', erro);
+              if(erro.status == 400) {
+                console.log(erro);
+              }
+            }
+        );
+
+    // this.router.navigate(['/user']);
     return true;
   }
 

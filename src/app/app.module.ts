@@ -32,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import {HttpClientModule} from "@angular/common/http";
 
 /**Configurations.*/
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = { };
@@ -58,6 +59,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = { };
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    HttpClientModule
   ],
   providers: [
     // AngularFireAuth,
