@@ -13,9 +13,7 @@ export class EsqueciSenhaDialogComponent {
 
  public email: string;
 
-
  public formEmail: FormGroup;
-
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<EsqueciSenhaDialogComponent>,

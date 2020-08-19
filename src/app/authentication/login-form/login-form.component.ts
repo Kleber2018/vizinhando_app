@@ -16,6 +16,7 @@ import { Usuario } from 'src/app/shared/model/usuario.model';
 import { EsqueciSenhaDialogComponent } from './esqueci-senha-dialog/esqueci-senha-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
+import {User} from "../../shared/model/user.model";
 
 
 @Component({
@@ -38,12 +39,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialog: MatDialog
   ) {
-    const usuarioSession: Usuario = sessionStorage.getItem('usuario')
-    ? JSON.parse(sessionStorage.getItem('usuario'))
+    const usuarioLogado: User = sessionStorage.getItem('userEquipe2')
+    ? JSON.parse(sessionStorage.getItem('userEquipe2'))
     : null;
 
-
-    if (usuarioSession) {
+    if (usuarioLogado) {
       this.router.navigate(['/user']);
     }
    }
@@ -67,6 +67,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   private getUsuarioByEMail(eMail: string): void {
 
     console.log('implementar buscar usuário')
+
     // this.usuarioService
     //   .getUsuarioByEMail(eMail.toLowerCase())
     //   .pipe(takeUntil(this.end))
@@ -85,31 +86,18 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   private login(eMail: string, password: string): void {
     try {
-      this.authenticationService.login(eMail.toLowerCase(), password).then(r => {
-        console.log('retorno login', r);
-        this.getUsuarioByEMail(eMail.toLowerCase());
-      }).catch(error => {
+      this.authenticationService.login(eMail.toLowerCase(), password)
+        .then(r => {
+          console.log('retorno login', r);
+          sessionStorage.setItem('userEquipe2', JSON.stringify(r));
+          this.router.navigate(['/user']);
+        }).catch(error => {
             console.log(error.error.error)
             this.formLogin.get('password').setValue('');
           }
-      )
+        )
     }  catch (e) {}
   }
-
-  // private login(eMail: string, password: string): void {
-  //   this.authenticationService
-  //     .login(eMail.toLowerCase(), password)
-  //     .then(
-  //       response => {
-  //         this.getUsuarioByEMail(eMail.toLowerCase());
-  //       }
-  //     ).catch(error => {
-  //         // this.formLogin.get('eMail').setValue('');
-  //         this.formLogin.get('password').setValue('');
-  //       }
-  //     )
-  //   ;
-  // }
 
   public submitFormLogin(): void {
     if (this.formLogin.valid) {

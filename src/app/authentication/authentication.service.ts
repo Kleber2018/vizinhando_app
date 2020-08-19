@@ -15,7 +15,6 @@ export class AuthenticationService {
   readonly apiURL : string;
 
   constructor(
-    // private angularFireAuth: AngularFireAuth,
     private http : HttpClient,
     private router: Router
   ) {
@@ -32,34 +31,8 @@ export class AuthenticationService {
     } catch (e) {}
 
    }
-    //   try {
-    //       return this.http.post(`${this.apiURL}/session`, autenticacao)
-    //
-    //     .toPromise().then(
-    //         resultado => {
-    //              console.log('retorno', resultado)
-    //             return resultado
-    //         },
-    //     ).catch(
-    //         erro => {
-    //     console.log('retorno 2 erro', erro);
-    //     if(erro.status == 400) {
-    //         console.log(erro);
-    //     }
-    //     return erro
-    // });
-    //   } catch (e) {
-    //    console.log('teste', e)
-    //
-    //   }
 
-    // this.router.navigate(['/user']);
-  // }
 
-  // public login(eMail: string, password: string): Promise<firebase.auth.UserCredential> {
-  //   return this.angularFireAuth.auth.signInWithEmailAndPassword(eMail, password);
-  // }
-  //
   public logout(): void {
     console.log('deslogar');
     localStorage.removeItem('usuario');

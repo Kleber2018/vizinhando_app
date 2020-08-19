@@ -1,1 +1,12 @@
-<p>user-form works!</p>
+<main>
+    <h3>TELA PERFIL DO USUÁRIO</h3>
+    <section *ngIf="userLogado">
+        <p>{{userLogado.user.nome}}</p>
+        <p>{{userLogado.user.email}}</p>
+        <p>{{userLogado.user.id}}</p>
+        <p><br>TOKEN:</p>
+        <p>{{userLogado.token}}</p>
+    </section>
+</main>
+
+
