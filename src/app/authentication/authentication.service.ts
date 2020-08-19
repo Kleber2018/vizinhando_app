@@ -11,24 +11,24 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AuthenticationService {
 
   constructor(
-    private angularFireAuth: AngularFireAuth,
+    // private angularFireAuth: AngularFireAuth,
     private router: Router
   ) { }
 
-  public login(eMail: string, password: string): Promise<firebase.auth.UserCredential> {
-    return this.angularFireAuth
-    .auth
-    .signInWithEmailAndPassword(eMail, password);
+  public login(eMail: string, password: string): boolean {
+    this.router.navigate(['/user']);
+    return true;
   }
 
+  // public login(eMail: string, password: string): Promise<firebase.auth.UserCredential> {
+  //   return this.angularFireAuth.auth.signInWithEmailAndPassword(eMail, password);
+  // }
+  //
   public logout(): void {
-    this.angularFireAuth
-      .auth
-      .signOut();
+    console.log('deslogar');
     localStorage.removeItem('usuario');
     sessionStorage.removeItem('usuario');
-
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
   // public generateCredential(eMail: string, password: string): void {
@@ -44,19 +44,26 @@ export class AuthenticationService {
   //   ;
   // }
 
-  public redefinePassword(eMail: string): Promise<any> {
-    return this.angularFireAuth
-      .auth
-      .sendPasswordResetEmail(eMail)
-      .then(
-        response => { 
-          console.log(response);
-        return 'enviado'
-      })
-      .catch(
-        error => { console.error(error);
-        return error 
-      })
-    ;
+
+  public redefinePassword(eMail: string){
+    return 'enviado email';
   }
+
+
+
+  // public redefinePassword(eMail: string): Promise<any> {
+  //   return this.angularFireAuth
+  //     .auth
+  //     .sendPasswordResetEmail(eMail)
+  //     .then(
+  //       response => {
+  //         console.log(response);
+  //       return 'enviado'
+  //     })
+  //     .catch(
+  //       error => { console.error(error);
+  //       return error
+  //     })
+  //   ;
+  // }
 }

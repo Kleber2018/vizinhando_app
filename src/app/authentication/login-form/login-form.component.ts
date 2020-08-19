@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import { MatInput } from '@angular/material/input';
 
 /**Services.*/
-import { UsuarioService } from '../usuario.service';
+// import { UsuarioService } from '../usuario.service';
 import { AuthenticationService } from '../authentication.service';
 
 import { Usuario } from 'src/app/shared/model/usuario.model';
@@ -32,7 +32,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private usuarioService: UsuarioService,
+    // private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private location: Location,
     private router: Router,
@@ -44,7 +44,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
 
     if (usuarioSession) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/user']);
     }
    }
 
@@ -65,40 +65,48 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   private getUsuarioByEMail(eMail: string): void {
-    this.usuarioService
-      .getUsuarioByEMail(eMail.toLowerCase())
-      .pipe(takeUntil(this.end))
-      .subscribe(
-        (response: Usuario[]) => {
-          localStorage.setItem('usuario', JSON.stringify(response[0]));
-          sessionStorage.setItem('usuario', JSON.stringify(response[0]));
-          this.router.navigate(['/solicitacao']);
-        },
-        (error: string) => {
-          console.error('tt1', error);
-          this.logout();
-        }
-      )
-    ;
+
+    console.log('buscando usuario')
+    // this.usuarioService
+    //   .getUsuarioByEMail(eMail.toLowerCase())
+    //   .pipe(takeUntil(this.end))
+    //   .subscribe(
+    //     (response: Usuario[]) => {
+    //       localStorage.setItem('usuario', JSON.stringify(response[0]));
+    //       sessionStorage.setItem('usuario', JSON.stringify(response[0]));
+    //       this.router.navigate(['/solicitacao']);
+    //     },
+    //     (error: string) => {
+    //       console.error('tt1', error);
+    //       this.logout();
+    //     }
+    //   );
   }
 
   private login(eMail: string, password: string): void {
-    this.authenticationService
-      .login(eMail.toLowerCase(), password)
-      .then(
-        response => {
-          this.getUsuarioByEMail(eMail.toLowerCase());
-        }
-      ).catch(error => {
-          // this.formLogin.get('eMail').setValue('');
-          this.formLogin.get('password').setValue('');
-        }
-      )
-    ;
+    this.authenticationService.login(eMail.toLowerCase(), password)
+
   }
 
+  // private login(eMail: string, password: string): void {
+  //   this.authenticationService
+  //     .login(eMail.toLowerCase(), password)
+  //     .then(
+  //       response => {
+  //         this.getUsuarioByEMail(eMail.toLowerCase());
+  //       }
+  //     ).catch(error => {
+  //         // this.formLogin.get('eMail').setValue('');
+  //         this.formLogin.get('password').setValue('');
+  //       }
+  //     )
+  //   ;
+  // }
+
   public submitFormLogin(): void {
+
     if (this.formLogin.valid) {
+      console.log('submetendo')
       this.login(
         this.formLogin.get('eMail').value,
         this.formLogin.get('password').value

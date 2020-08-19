@@ -41,7 +41,6 @@ export class EsqueciSenhaDialogComponent {
     if (this.formEmail.valid) {
       console.log(this.formEmail.value.eMail)
         var retorno = await this.authenticationService.redefinePassword(this.formEmail.value.eMail.toLowerCase())
-        
       console.log('retornando', retorno);
       this.dialogRef.close(retorno);
     }

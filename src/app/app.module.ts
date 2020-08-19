@@ -22,8 +22,6 @@ import { SharedModule } from './shared/shared.module';
 
 /**Components.*/
 import { AppComponent } from './app/app.component';
-import { HomepageComponent } from './homepage/homepage.component';
-
 
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
@@ -41,8 +39,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = { };
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomepageComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -50,11 +47,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = { };
     ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireDatabaseModule,
-    AngularFireFunctionsModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
+    // AngularFirestoreModule,
+    // AngularFireDatabaseModule,
+    // AngularFireFunctionsModule,
+    // AngularFireAuthModule,
+    // AngularFireStorageModule,
     NgxMaterialTimepickerModule,
     NgxMaskModule.forRoot(options),
     SharedModule,
@@ -63,7 +60,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = { };
     MatInputModule,
   ],
   providers: [
-    AngularFireAuth,
+    // AngularFireAuth,
     ScreenTrackingService,
     { provide: LOCALE_ID, useValue: 'pt' }
   ],
