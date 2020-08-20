@@ -1,4 +1,4 @@
-<main>
+<main class="main" fxFlex="100%">
     <h3>TELA PERFIL DO USUÁRIO</h3>
     <section *ngIf="userLogado">
         <p>{{userLogado.user.nome}}</p>
@@ -7,6 +7,84 @@
         <p><br>TOKEN:</p>
         <p>{{userLogado.token}}</p>
     </section>
+
+    <section fxLayout="column">
+        <section fxFlex.xs="100%" class="cardSection">
+            <form [formGroup]="formUser" >
+                <mat-card>
+                    <mat-card-header>
+                        <div mat-card-avatar style="  margin-block-end: 10px; margin-top: -10px;"><mat-icon>spa</mat-icon></div>
+                        <mat-card-title>Informações</mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content >
+                        <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+
+                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                                <mat-label>Nome</mat-label>
+                                <input
+                                        matInput
+                                        type="text"
+                                        minlength="1"
+                                        maxlength="80"
+                                        required="true"
+                                        placeholder="GR"
+                                        formControlName="nome">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                                <mat-label>E-mail</mat-label>
+                                <input
+                                        matInput
+                                        type="email"
+                                        minlength="1"
+                                        maxlength="60"
+                                        required="true"
+                                        placeholder="Cidade/Localidade"
+                                        formControlName="email">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                                <mat-label>Senha</mat-label>
+                                <input
+                                        matInput
+                                        type="text"
+                                        minlength="1"
+                                        maxlength="60"
+                                        required="true"
+                                        placeholder="Senha"
+                                        formControlName="senha">
+                            </mat-form-field>
+                        </section>
+
+                    </mat-card-content>
+
+
+                    <mat-card-content>
+                        <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="4px">
+                            <!-- <app-come-back-button (comeBackEvent)="comeBack()"></app-come-back-button> -->
+                            <!-- <button mat-raised-button  color="accept" (click)="abrirCamera()"><mat-icon>camera_enhance</mat-icon>Tirar Foto</button> -->
+                            <button
+                                    type="submit"
+                                    mat-raised-button
+                                    color="primary"
+                                    [disabled]="(!formUser.valid)"
+                                    (click)="submitFormUser()">
+                                <mat-icon>done_all</mat-icon>
+                                Salvar
+                            </button>
+                        </section>
+                    </mat-card-content>
+                </mat-card>
+            </form>
+            <div class="p-1">
+                <canvas #canvas class="vid"></canvas>
+            </div>
+        </section>
+    </section>
+    <app-footer></app-footer>
 </main>
+
+
 
 
