@@ -1,7 +1,7 @@
 {
   "hosting": {
     "public": "dist/y",
-    "site": "inovacaoapp1",
+    "site": "vizinhandoapp",
     "ignore": [
       "firebase.json",
       "**/.*",

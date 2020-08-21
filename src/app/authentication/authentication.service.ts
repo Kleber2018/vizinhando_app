@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 /**Third party modules.*/
 import { AngularFireAuth } from '@angular/fire/auth';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {tryCatch} from "rxjs/internal-compatibility";
 import {User} from "../shared/model/user.model";
 
@@ -13,27 +13,27 @@ import {User} from "../shared/model/user.model";
 })
 export class AuthenticationService {
 
-  readonly apiURL : string;
-
   constructor(
     private http : HttpClient,
     private router: Router
   ) {
 
-      this.apiURL = localStorage.getItem('urlServidor')
-          ? JSON.parse(localStorage.getItem('urlServidor'))
-          : 'http://localhost:3333';
+
   }
 
   public login(eMail: string, password: string): Promise<any>  {
-   const autenticacao = {
-      "email": eMail,
-        "password": password
-    }
-    try {
-        return this.http.post(`${this.apiURL}/login`, autenticacao).toPromise();
-    } catch (e) {}
 
+      const apiURL = localStorage.getItem('urlServidor')
+          ? JSON.parse(localStorage.getItem('urlServidor'))
+          : null;
+
+       const autenticacao = {
+          "email": eMail,
+            "password": password
+        }
+        try {
+            return this.http.post(`${apiURL}/login`, autenticacao).toPromise();
+        } catch (e) {}
    }
 
 
@@ -46,22 +46,15 @@ export class AuthenticationService {
     this.router.navigate(['/login']);
   }
 
-  // public generateCredential(eMail: string, password: string): void {
-  //   this.angularFireAuth
-  //     .auth
-  //     .createUserWithEmailAndPassword(eMail, password)
-  //     .then(
-  //       response => { console.log(response); }
-  //     )
-  //     .catch(
-  //       error => { console.error(error); }
-  //     )
-  //   ;
-  // }
-
-
   public redefinePassword(eMail: string){
-    return 'enviado email';
+      const apiURL = localStorage.getItem('urlServidor')
+          ? JSON.parse(localStorage.getItem('urlServidor'))
+          : null;
+
+      let param: any = {'email': eMail};
+      try {
+          return this.http.get(`${apiURL}/forgotPassword`, {params: param}).toPromise();
+      } catch (e) {}
   }
 
 

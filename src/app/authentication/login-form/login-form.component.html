@@ -1,7 +1,7 @@
 <main class="main" fxLayout="column" fxLayoutAlign="start center">
   <section fxLayoutAlign="space-between start" class="header" >
     <div  class="header-sidenav">
-      <img src="../../../assets/logo2.png" alt="Viseu-logo" height="64">
+      <img src="../../../assets/logo2.png" alt="UTFPR-logo" height="64">
     </div>
     <p class="titulo-header">
       Sistema Cliente
@@ -64,24 +64,33 @@
             </mat-form-field>
           </section>
   
-          <section fxLayout="row wrap" fxLayoutAlign="end" fxLayoutGap="15px">
-            <p (click)="esqueciMinhaSenha()" style="margin: 0px; padding-right: 5px;">Esqueci minha senha</p>
-            <button
-                    type="submit"
-                    mat-raised-button
-                    color="primary"
-                    (click)="abrirFormNovoUser()">
-              <mat-icon>lock</mat-icon>
-              Novo Usuário
-            </button>
-            <button
-              type="submit"
-              mat-raised-button
-              color="primary"
-              [disabled]="formLogin?.invalid" cdkFocusInitial>
-                <mat-icon>lock</mat-icon>
-                Acessar sistema
-            </button>
+          <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutAlign="end" fxLayoutGap="15px">
+            <div class="div-buttons-acao" fxFlex="100%" fxFlex.sm="30%" fxFlex.md="27%" fxFlex.lg="25%" fxLayoutAlign="center center">
+              <p (click)="esqueciMinhaSenha()" class="button-esqueci-senha">Esqueci minha senha</p>
+            </div>
+
+            <div class="div-buttons-acao" fxFlex="100%" fxFlex.sm="30%" fxFlex.md="25%" fxFlex.lg="25%" fxLayoutAlign="center center">
+              <button
+                      type="submit"
+                      mat-raised-button
+                      color="accent"
+                      class="buttons-acao"
+                      (click)="abrirFormNovoUser()">
+                <mat-icon>person_add</mat-icon>
+                Novo Usuário
+              </button>
+            </div>
+            <div fxFlex="100%" fxFlex.sm="33%" fxFlex.md="28%" fxFlex.lg="27%" fxLayoutAlign="center center">
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                class="buttons-acao"
+                [disabled]="formLogin?.invalid" cdkFocusInitial>
+                  <mat-icon>lock</mat-icon>
+                  Acessar sistema
+              </button>
+            </div>
           </section>
         </form>
       </mat-card-content>

@@ -7,7 +7,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 export class UserService {
 
   readonly apiURL : string;
-  private header = new Headers();
 
   constructor(
       private http : HttpClient
@@ -18,22 +17,17 @@ export class UserService {
   }
 
   public criarUser(user: any){
-    // this.header.append('Content-Type', 'application/x-www-form-urlencoded')
     return this.http.post(`${this.apiURL}/user`, user).toPromise();
   }
 
   public buscarUser(){
-
     const token =  sessionStorage.getItem('userEquipe2token')
         ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
         : null;
-
     const headers = new HttpHeaders()
                         .set('Content-Type', 'application/json')
                         .set('Authorization', token.token)
-    // this.header.append('Content-Type', 'application/json')
-    // this.header.append('Authorization', token)
-      console.log(headers);
+      console.log('headers', headers);
       return this.http.get(`${this.apiURL}/me`, {headers: headers}).toPromise();
   }
 

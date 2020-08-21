@@ -61,7 +61,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.formLogin = this.formBuilder.group({
       eMail: ['klebers@alunos.utfpr.edu.br', [ Validators.required, Validators.email ]],
       password: ['', [ Validators.required ]],
-      url: ['http://vizinhando-backend.herokuapp.com', [ Validators.required ]]
+      url: ['https://vizinhando-backend.herokuapp.com', [ Validators.required ]]
     });
   }
 

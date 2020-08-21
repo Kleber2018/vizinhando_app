@@ -25,3 +25,22 @@
     font-size: 20px;
     margin-top: 20px;
 }
+
+.button-esqueci-senha{
+  margin: 0px;
+  padding-right: 5px;
+}
+
+/* // celular */
+@media screen and (max-width: 599px) {
+  .div-buttons-acao{
+    margin: 16px;
+  }
+
+  .buttons-acao {
+    width: 220px;
+    height: 44px;
+  }
+
+
+}
