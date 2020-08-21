@@ -1,7 +1,5 @@
-# Projeto Inovação
-App em Angular de formulário para o projeto Inovação
-
-projetoinovacaoapp@gmail.com
+# Projeto Vizinhando
+App em Angular para o projeto da disciplina cliente servidor CLiente Servidor
 
 
 ## DOCUMENTAÇÃO ANGULAR
@@ -132,8 +130,8 @@ Configurando (Para caso preciso trocar a conta do Firebase, ver mais detalhes na
 
 DEPOIS DE CONFIGURADO O FIREBASE:
 
-  ```ng build --prod```
+  ```ng build```
 
-  ```firebase deploy --only hosting:projetoinovacao```
+  ```firebase deploy```
 
 app6

@@ -73,13 +73,13 @@ export class UserFormComponent implements OnInit {
       name: "Kleber Santos" ,
       email: "klebers@alunos.utfpr.edu.br" ,
       password: "1234",
-      zip_code: "1234" ,
+      zip_code: "84026395" ,
       latitude: 12 ,
       longitude: 12 ,
       city: "Ponta Grossa" ,
       neighborhood: "Jd Carvalho" ,
-      street: "São Jorde" ,
-      number: 24 ,
+      street: "São Jorde",
+      number: 24,
       complement: "" ,
       phone: "42 9 99999999"
     })
