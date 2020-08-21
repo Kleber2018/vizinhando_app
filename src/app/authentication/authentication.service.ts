@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {HttpClient} from "@angular/common/http";
 import {tryCatch} from "rxjs/internal-compatibility";
+import {User} from "../shared/model/user.model";
 
 
 @Injectable({
@@ -18,16 +19,19 @@ export class AuthenticationService {
     private http : HttpClient,
     private router: Router
   ) {
-    this.apiURL = 'http://localhost:3333';
+
+      this.apiURL = localStorage.getItem('urlServidor')
+          ? JSON.parse(localStorage.getItem('urlServidor'))
+          : 'http://localhost:3333';
   }
 
   public login(eMail: string, password: string): Promise<any>  {
    const autenticacao = {
       "email": eMail,
-        "senha": password
+        "password": password
     }
     try {
-        return this.http.post(`${this.apiURL}/session`, autenticacao).toPromise();
+        return this.http.post(`${this.apiURL}/login`, autenticacao).toPromise();
     } catch (e) {}
 
    }
@@ -35,8 +39,10 @@ export class AuthenticationService {
 
   public logout(): void {
     console.log('deslogar');
-    localStorage.removeItem('usuario');
-    sessionStorage.removeItem('usuario');
+    localStorage.removeItem('urlServidor');
+    localStorage.removeItem('userEquipe2');
+    sessionStorage.removeItem('userEquipe2');
+      sessionStorage.removeItem('userEquipe2token');
     this.router.navigate(['/login']);
   }
 

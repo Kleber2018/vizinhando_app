@@ -60,7 +60,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   private buildFormLogin(): void {
     this.formLogin = this.formBuilder.group({
       eMail: ['klebers@alunos.utfpr.edu.br', [ Validators.required, Validators.email ]],
-      password: ['', [ Validators.required ]]
+      password: ['', [ Validators.required ]],
+      url: ['http://vizinhando-backend.herokuapp.com', [ Validators.required ]]
     });
   }
 
@@ -89,18 +90,27 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       this.authenticationService.login(eMail.toLowerCase(), password)
         .then(r => {
           console.log('retorno login', r);
-          sessionStorage.setItem('userEquipe2', JSON.stringify(r));
+          sessionStorage.setItem('userEquipe2token', JSON.stringify(r));
           this.router.navigate(['/user']);
         }).catch(error => {
-            console.log(error.error.error)
+            console.log('erro 96', error)
             this.formLogin.get('password').setValue('');
           }
         )
     }  catch (e) {}
   }
 
+  abrirFormNovoUser(){
+    if(this.formLogin.value.url !== ''){
+      localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.value.url));
+      this.router.navigate(['/user']);
+    }
+  }
+
+
   public submitFormLogin(): void {
     if (this.formLogin.valid) {
+      localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.get('url').value));
       this.login(
         this.formLogin.get('eMail').value,
         this.formLogin.get('password').value

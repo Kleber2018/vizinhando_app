@@ -50,9 +50,30 @@
               <mat-error>A senha informada é inválida.</mat-error>
             </mat-form-field>
           </section>
+
+          <section>
+            <mat-form-field fxFlex="100%">
+              <input
+                      matInput
+                      type="text"
+                      required="true"
+                      placeholder="Informe a Url do servidor"
+                      formControlName="url" />
+
+              <mat-error>Informe o servidor</mat-error>
+            </mat-form-field>
+          </section>
   
           <section fxLayout="row wrap" fxLayoutAlign="end" fxLayoutGap="15px">
             <p (click)="esqueciMinhaSenha()" style="margin: 0px; padding-right: 5px;">Esqueci minha senha</p>
+            <button
+                    type="submit"
+                    mat-raised-button
+                    color="primary"
+                    (click)="abrirFormNovoUser()">
+              <mat-icon>lock</mat-icon>
+              Novo Usuário
+            </button>
             <button
               type="submit"
               mat-raised-button
