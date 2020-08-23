@@ -4,6 +4,7 @@ import {User} from "../../shared/model/user.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../authentication/authentication.service";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-user-form',
@@ -15,19 +16,17 @@ export class UserFormComponent implements OnInit {
   public formUser: FormGroup;
 
   public user = {
-    nome: "Kleber Santos" ,
-    email: "klebers@alunos.utfpr.edu.br" ,
-    senha: "1234",
-    cep: "1234" ,
-    coordenada: "12" ,
-    cidade: "Ponta Grossa" ,
-    bairro: "Jd Carvalho" ,
-    rua: "São Jorde" ,
-    numero: "24" ,
-    complemento: "" ,
-    telefone: "42 9 99999999" ,
-    status: "1" ,
-    privilegios: "adm"
+    name: '' ,
+    email: '' ,
+    zip_code: '' ,
+    latitude: -25.0945 ,
+    longitude: -50.1633 ,
+    city: '' ,
+    neighborhood: '' ,
+    street: '',
+    number: 0,
+    complement: '' ,
+    phone: ''
   }
 
   constructor(
@@ -42,46 +41,51 @@ export class UserFormComponent implements OnInit {
         : null;
 
     if (this.userLogado) {
-      console.log('logado', this.userLogado);
-      const retorno = this.userService.buscarUser().then(r => {
-        console.log('retornado com sucesso', r);
-      }).catch(error => {
-            console.log('RECUSADO:',error.error)
-          }
-      )
+      console.log('sessionStorage User', this.userLogado);
+      setTimeout(() => {
+            this.userService.buscarUser().then(userRetorno => {
+              console.log('Retornou /me', userRetorno);
+              this.construtorFormUser(userRetorno);
+            }).catch(error => {
+                  if (error.error){
+                    console.log('Retornou Erro:',error.error);
+                  } else {
+                    console.log('Retornou Erro:',error);
+                  }
+                }
+            )
+          },
+          1500);
     } else {
-      console.log('usuário não logado')
-        // this.router.navigate(['/login']);
+      console.log('Novo Usuário');
+      this.construtorFormUser(this.user);
     }
-
-    console.log('activated rout', this.activatedRoute.snapshot.params)
-
-    if(this.activatedRoute.snapshot.params.id){
-      console.log('buscar dados do usuário');
-    }
-    this.construtorFormUser(this.user);
-
-
   }
 
   ngOnInit(): void {
   }
 
 
-  private construtorFormUser(construtorFormUser: any): void {
+  private construtorFormUser(construtorUser: any): void {
+    if(construtorUser.user){
+      this.user = construtorUser.user;
+    } else {
+      this.user = construtorUser;
+    }
+    // console.log('construtor Form User', construtorUser.user);
     this.formUser = this.formBuilder.group({
-      name: "Kleber Santos" ,
-      email: "klebers@alunos.utfpr.edu.br" ,
-      password: "1234",
-      zip_code: "84026395" ,
-      latitude: 12 ,
-      longitude: 12 ,
-      city: "Ponta Grossa" ,
-      neighborhood: "Jd Carvalho" ,
-      street: "São Jorde",
-      number: 24,
-      complement: "" ,
-      phone: "42 9 99999999"
+      name: this.user.name ,
+      email: [this.user.email, [ Validators.required, Validators.email ]] ,
+      password: ['', [ Validators.required]],
+      zip_code: [this.user.zip_code, [ Validators.required]] ,
+      latitude: this.user.latitude,
+      longitude: this.user.longitude,
+      city: [this.user.city, [ Validators.required]] ,
+      neighborhood: [this.user.neighborhood, [ Validators.required]] ,
+      street: [this.user.street, [ Validators.required]],
+      number: [this.user.number, [ Validators.required]],
+      complement: this.user.complement,
+      phone: [this.user.phone, [ Validators.required]]
     })
   }
 
@@ -96,6 +100,10 @@ export class UserFormComponent implements OnInit {
           }
       )
     }
+  }
+
+  public togglePasswordVisibility(input_password: MatInput): void {
+    input_password.type = input_password.type === 'text' ? 'password' : 'text';
   }
 
   Logout(){

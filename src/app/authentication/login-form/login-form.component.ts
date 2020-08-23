@@ -65,26 +65,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getUsuarioByEMail(eMail: string): void {
-
-    console.log('implementar buscar usuário')
-
-    // this.usuarioService
-    //   .getUsuarioByEMail(eMail.toLowerCase())
-    //   .pipe(takeUntil(this.end))
-    //   .subscribe(
-    //     (response: Usuario[]) => {
-    //       localStorage.setItem('usuario', JSON.stringify(response[0]));
-    //       sessionStorage.setItem('usuario', JSON.stringify(response[0]));
-    //       this.router.navigate(['/solicitacao']);
-    //     },
-    //     (error: string) => {
-    //       console.error('tt1', error);
-    //       this.logout();
-    //     }
-    //   );
-  }
-
   private login(eMail: string, password: string): void {
     try {
       this.authenticationService.login(eMail.toLowerCase(), password)
@@ -142,12 +122,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     input_password.type = input_password.type === 'text' ? 'password' : 'text';
   }
 
-  public comeBack(): void {
-    this.location.back();
-  }
-
   public logout(): void {
     this.authenticationService.logout();
-    this.router.navigate(['/']);
-    }
+  }
 }

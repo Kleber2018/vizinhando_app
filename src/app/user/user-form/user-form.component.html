@@ -1,12 +1,15 @@
-<main class="main" fxFlex="100%">
-    <h3>TELA PERFIL DO USUÁRIO</h3>
-    <section *ngIf="userLogado">
-        <p><br>TOKEN:</p>
-        <p>{{userLogado.token}}</p>
-    </section>
+<main class="main" fxFlex="100%" fxLayout="column" >
+    <h3 *ngIf="userLogado">TELA PERFIL DO USUÁRIO</h3>
+    <h3 *ngIf="!userLogado">TELA CADASTRO DE USUÁRIO</h3>
 
-    <section fxLayout="column" *ngIf="!userLogado">
-        <section fxFlex.xs="100%" class="cardSection">
+
+
+    <section fxLayout="column">
+        <section *ngIf="!formUser" fxFlex="100%" fxLayoutAlign="center center" style="margin: 160px 0px">
+            <mat-spinner></mat-spinner>
+        </section>
+
+        <section fxFlex.xs="100%" class="cardSection" *ngIf="formUser">
             <form [formGroup]="formUser" >
                 <mat-card>
                     <mat-card-header>
@@ -29,7 +32,7 @@
                                         formControlName="name">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%" disabled>
                                 <mat-label>E-mail</mat-label>
                                 <input
                                         matInput
@@ -41,16 +44,26 @@
                                         formControlName="email">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
-                                <mat-label>Senha</mat-label>
+
+
+                            <mat-form-field *ngIf="!userLogado" appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
                                 <input
                                         matInput
-                                        type="text"
+                                        #input_password
+                                        type="password"
+                                        required="true"
                                         minlength="1"
                                         maxlength="60"
-                                        required="true"
-                                        placeholder="Senha"
-                                        formControlName="password">
+                                        placeholder="Informe sua senha"
+                                        formControlName="password" />
+
+                                <button
+                                        type="button"
+                                        matSuffix
+                                        mat-icon-button
+                                        (click)="togglePasswordVisibility(input_password)">
+                                    <mat-icon>{{ input_password?.type === 'password' ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
                             </mat-form-field>
                         </section>
 
@@ -166,14 +179,14 @@
                     </mat-card-content>
                 </mat-card>
             </form>
-            <div class="p-1">
-                <canvas #canvas class="vid"></canvas>
-            </div>
         </section>
     </section>
 
+    <section  fxLayoutAlign="end" style="margin: 32px 0px">
+        <button mat-raised-button *ngIf="userLogado" color="accent" (click)="Logout()"><mat-icon class="mat-18">exit_to_app</mat-icon>Logout</button>
+        <button mat-raised-button *ngIf="!userLogado" color="primary" (click)="Logout()"><mat-icon class="mat-18">navigate_before</mat-icon>Voltar</button>
+    </section>
 
-    <button mat-raised-button color="accent" (click)="Logout()">Logout</button>
     <app-footer></app-footer>
 </main>
 

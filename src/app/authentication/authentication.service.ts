@@ -16,13 +16,9 @@ export class AuthenticationService {
   constructor(
     private http : HttpClient,
     private router: Router
-  ) {
-
-
-  }
+  ) { }
 
   public login(eMail: string, password: string): Promise<any>  {
-
       const apiURL = localStorage.getItem('urlServidor')
           ? JSON.parse(localStorage.getItem('urlServidor'))
           : null;
@@ -38,11 +34,10 @@ export class AuthenticationService {
 
 
   public logout(): void {
-    console.log('deslogar');
     localStorage.removeItem('urlServidor');
     localStorage.removeItem('userEquipe2');
     sessionStorage.removeItem('userEquipe2');
-      sessionStorage.removeItem('userEquipe2token');
+    sessionStorage.removeItem('userEquipe2token');
     this.router.navigate(['/login']);
   }
 
@@ -56,22 +51,4 @@ export class AuthenticationService {
           return this.http.get(`${apiURL}/forgotPassword`, {params: param}).toPromise();
       } catch (e) {}
   }
-
-
-
-  // public redefinePassword(eMail: string): Promise<any> {
-  //   return this.angularFireAuth
-  //     .auth
-  //     .sendPasswordResetEmail(eMail)
-  //     .then(
-  //       response => {
-  //         console.log(response);
-  //       return 'enviado'
-  //     })
-  //     .catch(
-  //       error => { console.error(error);
-  //       return error
-  //     })
-  //   ;
-  // }
 }

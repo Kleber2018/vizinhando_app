@@ -6,7 +6,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import {SharedModule} from "../shared/shared.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
-
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatProgressBarModule
   ]
 })
 export class UserModule { }
