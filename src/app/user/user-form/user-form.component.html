@@ -39,14 +39,13 @@
                                         type="email"
                                         minlength="1"
                                         maxlength="60"
-                                        required="true"
                                         placeholder="E-mail"
                                         formControlName="email">
                             </mat-form-field>
 
 
 
-                            <mat-form-field *ngIf="!userLogado" appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                            <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
                                 <input
                                         matInput
                                         #input_password
@@ -164,8 +163,6 @@
 
                     <mat-card-content>
                         <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="4px">
-                            <!-- <app-come-back-button (comeBackEvent)="comeBack()"></app-come-back-button> -->
-                            <!-- <button mat-raised-button  color="accept" (click)="abrirCamera()"><mat-icon>camera_enhance</mat-icon>Tirar Foto</button> -->
                             <button
                                     type="submit"
                                     mat-raised-button

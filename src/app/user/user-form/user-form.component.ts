@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../user.service";
 import {User} from "../../shared/model/user.model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../authentication/authentication.service";
 import {MatInput} from "@angular/material/input";
+import {ValidateFn} from "codelyzer/walkerFactory/walkerFn";
 
 @Component({
   selector: 'app-user-form',
@@ -28,7 +29,6 @@ export class UserFormComponent implements OnInit {
     complement: '' ,
     phone: ''
   }
-
   constructor(
       private userService: UserService,
       private  authenticationService:  AuthenticationService,
@@ -72,11 +72,17 @@ export class UserFormComponent implements OnInit {
     } else {
       this.user = construtorUser;
     }
+
+    let verificaObrigatoriedadePassword = null;
+    if(this.userLogado){
+      verificaObrigatoriedadePassword = true;
+    }
+
     // console.log('construtor Form User', construtorUser.user);
     this.formUser = this.formBuilder.group({
       name: this.user.name ,
-      email: [this.user.email, [ Validators.required, Validators.email ]] ,
-      password: ['', [ Validators.required]],
+      email: [{value: this.user.email,  disabled: this.userLogado}, [Validators.required, Validators.email]] ,
+      password: [verificaObrigatoriedadePassword, [this.validatorRequiredPassword]],
       zip_code: [this.user.zip_code, [ Validators.required]] ,
       latitude: this.user.latitude,
       longitude: this.user.longitude,
@@ -92,15 +98,47 @@ export class UserFormComponent implements OnInit {
   submitFormUser(){
     console.log(this.formUser.value)
     if(this.formUser.valid){
-      this.userService.criarUser(this.formUser.value).then(r => {
-        console.log('Salvo com sucesso user:', r);
-        // this.router.navigate(['/user']);
-      }).catch(error => {
-            console.log('RECUSADO:',error.error.error)
+      if(this.userLogado){
+        const userUpdate = this.formUser.value
+        if(this.formUser.value.password == true){
+          console.log('remover a chave de senha');
+        }
+
+        this.userService.updateUser(this.formUser.value)
+        //     .then(r => {
+        //   console.log('Atualizado com sucesso o user:', r);
+        //   // this.router.navigate(['/user']);
+        // }).catch(error => {
+        //       if (error.error){
+        //         console.log('Retornou Erro:',error.error);
+        //       } else {
+        //         console.log('Retornou Erro:',error);
+        //       }
+        //     }
+        // )
+      } else {
+        this.userService.criarUser(this.formUser.value).then(r => {
+          console.log('Salvo com sucesso novo user:', r);
+          // this.router.navigate(['/user']);
+        }).catch(error => {
+            if (error.error){
+              console.log('Retornou Erro:',error.error);
+            } else {
+              console.log('Retornou Erro:',error);
+            }
           }
-      )
+        )
+      }
+
+
     }
   }
+
+
+  public validatorRequiredPassword(control: AbstractControl): boolean | null {
+      return control.value;
+  }
+
 
   public togglePasswordVisibility(input_password: MatInput): void {
     input_password.type = input_password.type === 'text' ? 'password' : 'text';
