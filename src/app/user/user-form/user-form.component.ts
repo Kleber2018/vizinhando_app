@@ -45,7 +45,7 @@ export class UserFormComponent implements OnInit {
       setTimeout(() => {
             this.userService.buscarUser().then(userRetorno => {
               console.log('Retornou /me', userRetorno);
-              this.construtorFormUser(userRetorno);
+              this.construtorFormUserUpdate(userRetorno);
             }).catch(error => {
                   if (error.error){
                     console.log('Retornou Erro:',error.error);
@@ -57,8 +57,7 @@ export class UserFormComponent implements OnInit {
           },
           1500);
     } else {
-      console.log('Novo Usuário');
-      this.construtorFormUser(this.user);
+      this.construtorFormUserCreate(this.user);
     }
   }
 
@@ -66,23 +65,36 @@ export class UserFormComponent implements OnInit {
   }
 
 
-  private construtorFormUser(construtorUser: any): void {
+  private construtorFormUserCreate(construtorUser: any): void {
+    // console.log('construtor Form User', construtorUser.user);
+    this.formUser = this.formBuilder.group({
+      name: [null, [Validators.required]] ,
+      email: [null, [Validators.required, Validators.email]] ,
+      password: [null, [Validators.required, Validators.minLength(3)]],
+      zip_code: [null, [ Validators.required]] ,
+      latitude: this.user.latitude,
+      longitude: this.user.longitude,
+      city: [null, [ Validators.required]] ,
+      neighborhood: [null, [ Validators.required]] ,
+      street: [null, [ Validators.required]],
+      number: [null, [ Validators.required]],
+      complement: null,
+      phone: [null, [ Validators.required]]
+    })
+  }
+
+
+  private construtorFormUserUpdate(construtorUser: any): void {
     if(construtorUser.user){
       this.user = construtorUser.user;
     } else {
       this.user = construtorUser;
     }
 
-    let verificaObrigatoriedadePassword = null;
-    if(this.userLogado){
-      verificaObrigatoriedadePassword = true;
-    }
-
-    // console.log('construtor Form User', construtorUser.user);
     this.formUser = this.formBuilder.group({
       name: this.user.name ,
       email: [{value: this.user.email,  disabled: this.userLogado}, [Validators.required, Validators.email]] ,
-      password: [verificaObrigatoriedadePassword, [this.validatorRequiredPassword]],
+      password: null,
       zip_code: [this.user.zip_code, [ Validators.required]] ,
       latitude: this.user.latitude,
       longitude: this.user.longitude,
@@ -95,31 +107,34 @@ export class UserFormComponent implements OnInit {
     })
   }
 
+
   submitFormUser(){
     console.log(this.formUser.value)
     if(this.formUser.valid){
       if(this.userLogado){
-        const userUpdate = this.formUser.value
-        if(this.formUser.value.password == true){
-          console.log('remover a chave de senha');
-        }
 
-        this.userService.updateUser(this.formUser.value)
-        //     .then(r => {
-        //   console.log('Atualizado com sucesso o user:', r);
-        //   // this.router.navigate(['/user']);
-        // }).catch(error => {
-        //       if (error.error){
-        //         console.log('Retornou Erro:',error.error);
-        //       } else {
-        //         console.log('Retornou Erro:',error);
-        //       }
-        //     }
-        // )
+        //console.log('enviando', this.userLogado )
+        let userLocal: User = this.formUser.value;
+        if(this.formUser.value.password == null ||this.formUser.value.password == ''){
+          delete userLocal['password'];
+        }
+        console.log('depois do if', userLocal)
+
+        this.userService.updateUser(userLocal)
+            .then(r => {
+          console.log('Atualizado com sucesso o user:', r);
+        }).catch(error => {
+              if (error.error){
+                console.log('Retornou Erro:',error.error);
+              } else {
+                console.log('Retornou Erro:',error);
+              }
+            }
+        )
       } else {
         this.userService.criarUser(this.formUser.value).then(r => {
           console.log('Salvo com sucesso novo user:', r);
-          // this.router.navigate(['/user']);
+          this.router.navigate(['/login']);
         }).catch(error => {
             if (error.error){
               console.log('Retornou Erro:',error.error);
@@ -133,12 +148,6 @@ export class UserFormComponent implements OnInit {
 
     }
   }
-
-
-  public validatorRequiredPassword(control: AbstractControl): boolean | null {
-      return control.value;
-  }
-
 
   public togglePasswordVisibility(input_password: MatInput): void {
     input_password.type = input_password.type === 'text' ? 'password' : 'text';

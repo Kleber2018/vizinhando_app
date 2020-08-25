@@ -18,6 +18,7 @@ export class UserService {
   }
 
   public criarUser(user: any){
+    console.log(this.apiURL)
     return this.http.post(`${this.apiURL}/user`, user).toPromise();
   }
 
@@ -42,9 +43,7 @@ export class UserService {
         .set('Content-Type', 'application/json')
         .set('Authorization', token.token);
 
-    // return this.http.put(`${this.apiURL}user`, {headers: headers}).toPromise();
-      console.log('FALTA IMPLEMENTAR O PUT DE ATUALIZAÇÃO DO USER: ', user)
-    return true
+    return this.http.put(`${this.apiURL}/user`, user, {headers: headers}).toPromise();
   }
 
 }
