@@ -120,7 +120,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         if(this.formUser.value.password == null ||this.formUser.value.password == ''){
           delete userLocal['password'];
         }
-
+        userLocal.email = this.user.email
         this.userService.updateUser(userLocal)
             .then(r => {
           console.log('Atualizado com sucesso o user:', r);
