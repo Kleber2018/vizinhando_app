@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {User} from "../../shared/model/user.model";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -6,13 +6,17 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
 import {AuthenticationService} from "../../authentication/authentication.service";
 import {MatInput} from "@angular/material/input";
 import {ValidateFn} from "codelyzer/walkerFactory/walkerFn";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
+
+  private end: Subject<boolean> = new Subject();
+
   public userLogado: any;
   public formUser: FormGroup;
 
@@ -55,7 +59,7 @@ export class UserFormComponent implements OnInit {
                 }
             )
           },
-          1500);
+          1000);
     } else {
       this.construtorFormUserCreate(this.user);
     }
@@ -112,13 +116,10 @@ export class UserFormComponent implements OnInit {
     console.log(this.formUser.value)
     if(this.formUser.valid){
       if(this.userLogado){
-
-        //console.log('enviando', this.userLogado )
         let userLocal: User = this.formUser.value;
         if(this.formUser.value.password == null ||this.formUser.value.password == ''){
           delete userLocal['password'];
         }
-        console.log('depois do if', userLocal)
 
         this.userService.updateUser(userLocal)
             .then(r => {
@@ -144,8 +145,6 @@ export class UserFormComponent implements OnInit {
           }
         )
       }
-
-
     }
   }
 
@@ -155,5 +154,10 @@ export class UserFormComponent implements OnInit {
 
   Logout(){
     this.authenticationService.logout();
+  }
+
+  ngOnDestroy(): void {
+    this.end.next();
+    this.end.complete();
   }
 }

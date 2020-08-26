@@ -7,22 +7,23 @@ import {User} from "../shared/model/user.model";
 })
 export class UserService {
 
-  readonly apiURL : any;
-
   constructor(
       private http : HttpClient
-  ) {
-    this.apiURL = localStorage.getItem('urlServidor')
-        ? JSON.parse(localStorage.getItem('urlServidor'))
-        : null;
-  }
+  ) { }
 
   public criarUser(user: any){
-    console.log(this.apiURL)
-    return this.http.post(`${this.apiURL}/user`, user).toPromise();
+    const apiURL = localStorage.getItem('urlServidor')
+        ? JSON.parse(localStorage.getItem('urlServidor'))
+        : null;
+
+    return this.http.post(`${apiURL}/user`, user).toPromise();
   }
 
   public buscarUser(){
+    const apiURL = localStorage.getItem('urlServidor')
+        ? JSON.parse(localStorage.getItem('urlServidor'))
+        : null;
+
     const token =  sessionStorage.getItem('userEquipe2token')
         ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
         : null;
@@ -31,10 +32,14 @@ export class UserService {
                         .set('Content-Type', 'application/json')
                         .set('Authorization', token.token);
 
-      return this.http.get(`${this.apiURL}/me`, {headers: headers}).toPromise();
+      return this.http.get(`${apiURL}/me`, {headers: headers}).toPromise();
   }
 
   public updateUser(user: User){
+    const apiURL = localStorage.getItem('urlServidor')
+        ? JSON.parse(localStorage.getItem('urlServidor'))
+        : null;
+
     const token =  sessionStorage.getItem('userEquipe2token')
         ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
         : null;
@@ -43,7 +48,7 @@ export class UserService {
         .set('Content-Type', 'application/json')
         .set('Authorization', token.token);
 
-    return this.http.put(`${this.apiURL}/user`, user, {headers: headers}).toPromise();
+    return this.http.put(`${apiURL}/user`, user, {headers: headers}).toPromise();
   }
 
 }
