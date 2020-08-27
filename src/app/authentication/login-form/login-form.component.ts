@@ -59,7 +59,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   private buildFormLogin(): void {
     this.formLogin = this.formBuilder.group({
-      eMail: ['klebers@alunos.utfpr.edu.br', [ Validators.required, Validators.email ]],
+      eMail: ['', [ Validators.required, Validators.email ]],
       password: ['', [ Validators.required ]],
       url: ['https://vizinhando-backend.herokuapp.com', [ Validators.required ]]
     });
@@ -99,6 +99,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   async esqueciMinhaSenha(){
+    localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.get('url').value));
     const dialogRefRedefinicao = this.dialog.open(EsqueciSenhaDialogComponent, {
       minWidth: 301,
       // minWidth: 400,
