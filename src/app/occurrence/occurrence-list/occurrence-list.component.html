@@ -1,0 +1,105 @@
+<app-layout>
+  <main class="main" fxFlex="100%">
+  
+
+    <section fxLayout="column">
+    
+        <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let movimento of movimentacoes">        
+          <mat-card fxFlex="95%"  fxLayout="row" fxLayoutAlign="space-between start" class="status{{movimento.status}}" >
+            <mat-card-content fxFlex="100%" fxLayout="column" class="card-content" >
+                        
+              <div fxFlex="100%" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between">
+                <div fxLayout="row" fxLayoutAlign="space-between">
+                  <div fxLayout="row" *ngIf="movimento.status !== '2-pendente'">
+                    <p class="card-tx-tipo card-tx-tipo-titulo">Criado: </p>
+                    <!-- <p class="card-tx-tipo">{{movimento.informacoes.data}}</p> -->
+                  </div>
+                  <p *ngIf="movimento.status == '2-pendente'" class="tag-status1">Pendente</p>
+                  <div fxLayout="row">
+                    <p class="card-tx-tipo card-tx-tipo-titulo">Registro: </p>
+                    <p class="card-tx-tipo">{{movimento.createdAt.toDate() | date:'dd/MM/yy HH:mm'}}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div fxFlex="100%" fxLayout.gt-xs="row" fxLayout.lt-sm="column">
+                <div fxLayout="row" fxFlex="100%" style="width: 100%;" fxLayoutAlign="space-between start" class="div-descricao1" >
+                  <p class="card-tx-tipo card-tx-tipo-titulo"> Data: </p>
+                  <p class="card-tx-tipo"> {{movimento.informacoes.data.toDate() | date:'dd/MM/yy'}}</p>
+                  <p class="card-tx-tipo card-tx-tipo-titulo"> Patrimônio: </p>
+                  <p class="card-tx-tipo"> {{movimento.informacoes.identificacao.toUpperCase()}}</p>                  
+                </div>
+                
+              </div>
+
+              <div fxFlex="100%" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between">
+                <mat-divider></mat-divider>
+                <div fxLayout="row">
+                  <p class="card-tx-tipo">
+                    RETIRADO PARA 
+                    {{movimento.informacoes.gerencia.toUpperCase()}} - 
+                    {{movimento.informacoes.localidade.toUpperCase()}} - 
+                    {{movimento.informacoes.unidade.toUpperCase()}}
+                    {{movimento.informacoes.ponto.toUpperCase()}}
+                    POR 
+                    {{movimento.informacoes.responsavel.toUpperCase()}}
+                  </p>
+                </div>
+              </div>
+              
+             
+              <div fxFlex="100%" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between">
+                <mat-divider></mat-divider>
+                <div fxLayout="row">
+                  <p class="card-tx-tipo card-tx-tipo-titulo">Observação: </p>
+                  <p class="card-tx-tipo" >{{movimento.informacoes.obs}}</p>
+                </div>
+              </div>
+
+              <div fxLayout="row" fxLayout.lt-sm="column">
+                <div fxLayout="row" fxLayoutAlign="center" style="margin: 5px 0px;">
+                  <button mat-stroked-button 
+                    color="warn" 
+                    *ngIf="movimento.status!=='4-cancelado'"  
+                    (click)="alterarStatusMovimentacao(movimento, '4-cancelado')">
+                      <mat-icon>error_outline</mat-icon>Cancelar
+                  </button>
+                  <button mat-stroked-button *ngIf="movimento.status=='2-pendente'"  (click)="editarMovimentacao(movimento)" style="margin-left: 8px; color: blue;"><mat-icon>edit</mat-icon>Editar</button>
+                  <button mat-raised-button 
+                    *ngIf="(movimento.status=='2-pendente'&&usuario.rules.expedicao)" 
+                    style="background-color: forestgreen; color: white; margin-left: 8px;" 
+                    (click)="alterarStatusMovimentacao(movimento, '3-movimentado')">
+                    <mat-icon>done</mat-icon>
+                      Movimentar
+                  </button>
+                  <button mat-raised-button disabled
+                    *ngIf="(movimento.status=='2-pendente'&&!usuario.rules.expedicao)">
+                    <mat-icon>done</mat-icon>
+                      Movimentar
+                  </button>
+                  <button mat-raised-button *ngIf="movimento.status=='4-cancelado'" style="background-color: lightseagreen; color: white; margin-left: 10px;" (click)="alterarStatusMovimentacao(movimento, '2-aceito')"><mat-icon>done</mat-icon>Aceitar</button>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center" style="margin: 5px;">
+                  <mat-form-field>
+                    <ngx-mat-file-input placeholder="Inserir imagem" (change)="uploadImg($event, movimento)"></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div fxLayout="row" *ngIf="movimento.img" fxLayoutAlign="center" style="margin: 5px;">
+                <div fxLayout="row" *ngFor="let img of movimento.img" fxLayoutAlign="center">
+                  <!-- <p>{{img}}</p> -->
+                  <img src="{{img}}" height="180px" (click)="abrirImg(movimento, img)">
+                </div>
+              </div>
+            </mat-card-content> 
+          </mat-card>
+          <mat-divider></mat-divider>
+      </section>
+      </section>
+    </section>
+
+  </main>
+</app-layout>
+
+<app-footer></app-footer>

@@ -1,0 +1,159 @@
+<main class="main" fxFlex="100%" fxLayout="column" >
+  <h3 *ngIf="userLogado">TELA PERFIL DO OCORRÊNCIA</h3>
+  <h3 *ngIf="!userLogado">TELA CADASTRO DE OCORRÊNCIA</h3>
+
+
+
+  <section fxLayout="column">
+      <section *ngIf="!formOcurrence" fxFlex="100%" fxLayoutAlign="center center" style="margin: 160px 0px">
+          <mat-spinner></mat-spinner>
+      </section>
+
+      <section fxFlex.xs="100%" class="cardSection" *ngIf="formOcurrence">
+          <form [formGroup]="formOcurrence" >
+              <mat-card>
+                  <mat-card-header>
+                      <div mat-card-avatar style="  margin-block-end: 10px; margin-top: -10px;"><mat-icon>spa</mat-icon></div>
+                      <mat-card-title>Informações</mat-card-title>
+                  </mat-card-header>
+
+                  <mat-card-content >
+                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="100%" fxFlex.md="100%" fxFlex.lg="100%">
+                              <mat-label>Descrição da Ocorrência</mat-label>
+                              <input
+                                      matInput
+                                      type="text"
+                                      minlength="1"
+                                      maxlength="250"
+                                      required="true"
+                                      placeholder="Descrição"
+                                      formControlName="description">
+                          </mat-form-field>
+                      </section>
+
+                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                              <mat-label>Cep</mat-label>
+                              <input
+                                      matInput
+                                      type="text"
+                                      minlength="1"
+                                      maxlength="12"
+                                      required="true"
+                                      placeholder="GR"
+                                      formControlName="zip_code">
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                              <mat-label>Cidade</mat-label>
+                              <input
+                                      matInput
+                                      type="text"
+                                      minlength="1"
+                                      maxlength="60"
+                                      required="true"
+                                      placeholder="Cidade"
+                                      formControlName="city">
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                              <mat-label>Bairro</mat-label>
+                              <input
+                                      matInput
+                                      type="text"
+                                      minlength="1"
+                                      maxlength="70"
+                                      required="true"
+                                      placeholder="Bairro"
+                                      formControlName="neighborhood">
+                          </mat-form-field>
+                      </section>
+                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="76%" fxFlex.md="76%" fxFlex.lg="76%">
+                              <mat-label>Rua</mat-label>
+                              <input
+                                      matInput
+                                      type="email"
+                                      minlength="1"
+                                      maxlength="60"
+                                      required="true"
+                                      placeholder="Rua"
+                                      formControlName="street">
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                              <mat-label>numero</mat-label>
+                              <input
+                                      matInput
+                                      type="number"
+                                      minlength="1"
+                                      maxlength="10"
+                                      required="true"
+                                      placeholder="number"
+                                      formControlName="number">
+                          </mat-form-field>
+                      </section>
+
+                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="76%" fxFlex.md="76%" fxFlex.lg="76%">
+                              <mat-label>Complemento</mat-label>
+                              <input
+                                      matInput
+                                      type="email"
+                                      minlength="1"
+                                      maxlength="60"
+                                      placeholder="Complemento"
+                                      formControlName="complement">
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
+                              <mat-label>tipo</mat-label>
+                              <input
+                                      matInput
+                                      type="text"
+                                      minlength="1"
+                                      maxlength="30"
+                                      required="true"
+                                      placeholder="Tipo"
+                                      formControlName="type">
+                          </mat-form-field>
+                      </section>
+
+
+                  </mat-card-content>
+
+
+                  <mat-card-content>
+                      <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="4px">
+                          <button
+                                  type="submit"
+                                  mat-raised-button
+                                  color="primary"
+                                  [disabled]="(!formUser.valid)"
+                                  (click)="submitFormUser()">
+                              <mat-icon>done_all</mat-icon>
+                              Salvar
+                          </button>
+                      </section>
+                  </mat-card-content>
+              </mat-card>
+          </form>
+      </section>
+  </section>
+
+  <section  fxLayoutAlign="end" style="margin: 32px 0px">
+      <button mat-raised-button *ngIf="userLogado" color="accent" (click)="Logout()"><mat-icon class="mat-18">exit_to_app</mat-icon>Logout</button>
+      <button mat-raised-button *ngIf="!userLogado" color="primary" (click)="Logout()"><mat-icon class="mat-18">navigate_before</mat-icon>Voltar</button>
+  </section>
+
+  <app-footer></app-footer>
+</main>
+
+
+
+
