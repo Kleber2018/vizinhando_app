@@ -6,10 +6,10 @@ import { OccurrenceListComponent } from './occurrence-list/occurrence-list.compo
 
 
 const occurrenceRoutes: Routes = [
+  { path: '', component: OccurrenceListComponent },
   { path: 'novo', component: OccurrenceFormComponent },
   { path: 'editar/:id', component: OccurrenceFormComponent },
-  { path: 'relatorio', component: OccurrenceListComponent},
-  { path: '**', redirectTo: '/occurrence/novo'}
+  { path: '**', redirectTo: ''}
 ];
 
 @NgModule({

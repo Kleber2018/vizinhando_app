@@ -1,10 +1,7 @@
 <main class="main" fxFlex="100%" fxLayout="column" >
-  <h3 *ngIf="userLogado">TELA PERFIL DO OCORRÊNCIA</h3>
-  <h3 *ngIf="!userLogado">TELA CADASTRO DE OCORRÊNCIA</h3>
-
-
-
-  <section fxLayout="column">
+  <app-header></app-header>
+  <section fxLayout="column" style="padding: 16px">
+      <h3>{{title}}</h3>
       <section *ngIf="!formOcurrence" fxFlex="100%" fxLayoutAlign="center center" style="margin: 160px 0px">
           <mat-spinner></mat-spinner>
       </section>
@@ -134,7 +131,7 @@
                                   type="submit"
                                   mat-raised-button
                                   color="primary"
-                                  [disabled]="(!formUser.valid)"
+                                  [disabled]="(!formOcurrence.valid)"
                                   (click)="submitFormUser()">
                               <mat-icon>done_all</mat-icon>
                               Salvar
@@ -146,10 +143,6 @@
       </section>
   </section>
 
-  <section  fxLayoutAlign="end" style="margin: 32px 0px">
-      <button mat-raised-button *ngIf="userLogado" color="accent" (click)="Logout()"><mat-icon class="mat-18">exit_to_app</mat-icon>Logout</button>
-      <button mat-raised-button *ngIf="!userLogado" color="primary" (click)="Logout()"><mat-icon class="mat-18">navigate_before</mat-icon>Voltar</button>
-  </section>
 
   <app-footer></app-footer>
 </main>

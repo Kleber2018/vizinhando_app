@@ -13,5 +13,6 @@
   complement?: string;
   anonymous?: boolean;
   type?: string;
+  createdAt?: any;
 }
 

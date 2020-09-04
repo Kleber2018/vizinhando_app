@@ -1,0 +1,36 @@
+<!--<header fxLayout="row" class="header" fxLayoutAlign="space-between center">-->
+<!--  <h1 class="headerTitle" fxLayoutAlign="start center">-->
+<!--    <mat-icon>{{ iconName }}</mat-icon>-->
+<!--    &nbsp;{{ title }}-->
+<!--  </h1>-->
+<!--  &lt;!&ndash; <mat-slide-toggle *ngIf="empresaStatus == 'Online'" (click)="alterarStatus(empresaId, '2-off')">{{empresaStatus}}</mat-slide-toggle> &ndash;&gt;-->
+
+
+<!--  -->
+<!--  &lt;!&ndash; <div *ngIf="presence$ | async as presence">-->
+<!--   {{ this.usuarioStatus }}-->
+<!--  </div> &ndash;&gt;-->
+
+<!--</header>-->
+
+
+<mat-toolbar fxLayout="row" color="primary" class="toolbar">
+  <section fxFlex="75%">
+
+    <a mat-icon-button routerLink="/ocorrencia"><mat-icon>home</mat-icon></a>
+    <a mat-icon-button routerLink="/user"><mat-icon>person</mat-icon></a>
+  </section>
+
+  <section fxFlex="25%" fxLayoutAlign="end">
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </section>
+</mat-toolbar>
+
+
+
+
+
+
+

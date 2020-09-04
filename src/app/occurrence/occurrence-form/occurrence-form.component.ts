@@ -3,7 +3,6 @@ import { Subject, Observable } from 'rxjs';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { Usuario } from '../../shared/model/usuario.model'
 import { Occurrence } from '../occurrence.model'
 import { OccurrenceService } from '../occurrence.service'
 
@@ -27,9 +26,8 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
 
 
-  public title = "Nova Movimentação";
+  public title = "Nova Ocorrência";
 
-  public usuario: Usuario 
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -39,6 +37,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
 ) {
     if (this.activatedRoute.snapshot.params.id) { // caso venha um id é UPDATE
+      this.title = 'editar Ocorrência';
       this.occurrenceService.getOccurrence(this.activatedRoute.snapshot.params.id).then(ocurrenceRetorno => {
         console.log('Retornou /ocurrence', ocurrenceRetorno);
         this.buildFormOcurrenceUpdate(ocurrenceRetorno);
@@ -124,6 +123,9 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  Logout(){
+    this.authenticationService.logout();
+  }
   
   ngOnDestroy(): void {
     this.end.next();

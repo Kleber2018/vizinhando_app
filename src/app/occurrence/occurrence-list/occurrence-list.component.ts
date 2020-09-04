@@ -3,7 +3,6 @@ import { Subject, Observable } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { Usuario } from '../../shared/model/usuario.model';
 import { Occurrence } from '../occurrence.model';
 import { OccurrenceService } from '../occurrence.service';
 
@@ -12,7 +11,6 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { map, startWith, takeUntil} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Component({
@@ -24,9 +22,9 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
 
   private end: Subject<boolean> = new Subject(); 
 
-
+  public title = 'Lista de Ocorrências';
+  public ocorrencias = [{status: 22}, {status: 33},{status: 22}, {status: 33}];
   constructor(private router: Router,
-              private deviceService: DeviceDetectorService,
               private occurrenceService: OccurrenceService,
               private authenticationService: AuthenticationService,
               public dialog: MatDialog) { }

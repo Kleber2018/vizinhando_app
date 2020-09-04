@@ -1,0 +1,14 @@
+.header {
+  padding: 9px 6px;
+  margin: 5px 10px;
+}
+
+.headerTitle {
+  margin: 0px;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: start; */
+  font-size: 1.2rem;
+  /* text-align: center; */
+}
+

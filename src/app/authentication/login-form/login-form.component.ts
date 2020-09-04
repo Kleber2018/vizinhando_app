@@ -12,7 +12,6 @@ import { MatInput } from '@angular/material/input';
 // import { UsuarioService } from '../usuario.service';
 import { AuthenticationService } from '../authentication.service';
 
-import { Usuario } from 'src/app/shared/model/usuario.model';
 import { EsqueciSenhaDialogComponent } from './esqueci-senha-dialog/esqueci-senha-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';

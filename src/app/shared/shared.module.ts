@@ -12,12 +12,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 /**Components.*/
 import { FooterComponent } from './footer/footer.component';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import {HeaderComponent} from "./header/header.component";
 
 
 @NgModule({
   declarations: [
     FooterComponent, // rodapé das páginas
-    AlertDialogComponent // caixa de alerta
+    AlertDialogComponent,// caixa de alerta
+    HeaderComponent
   ],
   imports: [
     CommonModule, // estrutura do angular
@@ -28,7 +30,8 @@ import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
   exports: [
     AngularMaterialModule,
     FlexLayoutModule,
-    FooterComponent
+    FooterComponent,
+    HeaderComponent
   ]
 })
 export class SharedModule { }

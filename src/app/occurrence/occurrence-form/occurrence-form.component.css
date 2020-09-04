@@ -25,13 +25,9 @@ mat-card-title {
 
 
 @media screen and (min-width: 900px) {
-  .main {
-      padding: 0px 20px;
-  }
+
 }
 
 @media screen and (min-width: 1200px) {
-  .main {
-      padding: 0px 50px;
-  }
+
 }

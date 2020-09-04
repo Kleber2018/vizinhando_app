@@ -8,6 +8,7 @@ const appRoutes: Routes = [
   { path: 'login', loadChildren: './authentication/authentication.module#AuthenticationModule' },
   // { path: '', component: HomepageComponent, canActivate: [AuthenticationGuard] },
   { path: 'user', loadChildren: './user/user.module#UserModule' },
+  { path: 'ocorrencia', loadChildren: './occurrence/occurrence.module#OccurrenceModule' },
   // { path: '', redirectTo: '/login'},
   { path: '**', redirectTo: '/login'}
 ];

@@ -4,7 +4,7 @@ import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnaps
 
 /**Services.*/
 import { AuthenticationService } from './authentication.service';
-import { Usuario } from '../shared/model/usuario.model';
+import {User} from "../shared/model/user.model";
 
 
 @Injectable({
@@ -21,8 +21,8 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const usuario: Usuario = sessionStorage.getItem('usuario')
-      ? JSON.parse(sessionStorage.getItem('usuario'))
+    const usuario: User = sessionStorage.getItem('user')
+      ? JSON.parse(sessionStorage.getItem('user'))
       : null;
 
       if (usuario) {
@@ -39,8 +39,8 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const usuario: Usuario = sessionStorage.getItem('Usuario')
-      ? JSON.parse(sessionStorage.getItem('usuario'))
+    const usuario: User = sessionStorage.getItem('user')
+      ? JSON.parse(sessionStorage.getItem('user'))
       : null;
 
     if (usuario) {
