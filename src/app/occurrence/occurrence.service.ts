@@ -61,9 +61,6 @@ export class OccurrenceService {
 
 
 
-
-    
-
     getOccurrence(id: string) {
       const apiURL = localStorage.getItem('urlServidor')
         ? JSON.parse(localStorage.getItem('urlServidor'))
@@ -80,14 +77,20 @@ export class OccurrenceService {
       return this.http.get(`${apiURL}/occurrence`, {headers: headers}).toPromise();
     }
 
+    getOccurrences() {
+      const apiURL = localStorage.getItem('urlServidor')
+          ? JSON.parse(localStorage.getItem('urlServidor'))
+          : null;
 
+      const token =  sessionStorage.getItem('userEquipe2token')
+          ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
+          : null;
 
+      const headers = new HttpHeaders()
+          .set('Content-Type', 'application/json')
+          .set('Authorization', token.token);
 
-
-
-    getOccurrences(status: string) {
-      console.log('busca lista de  ocorrencia', status)
-      return true
+      return this.http.get(`${apiURL}/occurrences`, {headers: headers}).toPromise();
     }
 
 

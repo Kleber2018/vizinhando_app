@@ -24,12 +24,26 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
 
   public title = 'Lista de Ocorrências';
   public ocorrencias = [{status: 22}, {status: 33},{status: 22}, {status: 33}];
+  public Occurrences: any;
   constructor(private router: Router,
               private occurrenceService: OccurrenceService,
               private authenticationService: AuthenticationService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) { this.buildOccurrences()}
 
   ngOnInit() {   }
+
+  buildOccurrences(){
+      this.occurrenceService.getOccurrences().then(occurrencesRetorno => {
+        console.log('Retornou Occurrences', occurrencesRetorno);
+      }).catch(error => {
+            if (error.error){
+              console.log('Retornou Erro de Ocorrências:',error.error);
+            } else {
+              console.log('Retornou Erro de Ocorrências:',error);
+            }
+      })
+  }
+
 
   async alertaDialog(data: any) {
     // data: {
@@ -42,6 +56,7 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
     const retorno =  await dialogRefAlert.afterClosed().toPromise();
     return retorno;
   }
+
 
   ngOnDestroy(): void {
     this.end.next();
