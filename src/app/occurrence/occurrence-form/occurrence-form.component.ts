@@ -29,6 +29,8 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
   public title = "Nova Ocorrência";
 
 
+  public formCheckboxAnonymous = new FormControl(false);
+
   constructor(private router: Router,
     private formBuilder: FormBuilder,
     private occurrenceService: OccurrenceService,
@@ -119,6 +121,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
         ocurrence.ocurred_at = new Date( ano, mes, dia, hora, minuto).getTime();
         ocurrence.type = this.formType.value;
+        ocurrence.anonymous = this.formCheckboxAnonymous.value;
         console.log(ocurrence)
         this.occurrenceService.createOccurrence(ocurrence).then(r => {
           console.log('Salvo com sucesso nova Ocorrencia:', r);

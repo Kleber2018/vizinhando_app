@@ -108,8 +108,7 @@
                       </section>
 
                       <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
-
-                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="100%" fxFlex.md="100%" fxFlex.lg="100%">
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="75%" fxFlex.md="75%" fxFlex.lg="75%">
                               <mat-label>Complemento</mat-label>
                               <input
                                       matInput
@@ -119,6 +118,9 @@
                                       placeholder="Complemento"
                                       formControlName="complement">
                           </mat-form-field>
+                          <div fxFlex="100%" fxFlex.sm="25%" fxFlex.md="25%" fxFlex.lg="25%" style="margin: 0px; height: 54px">
+                              <mat-checkbox [formControl]="formCheckboxAnonymous" style="padding: 4px 1px; margin-right: 25px; opacity: 0.9;">Anônimo</mat-checkbox>
+                          </div>
                       </section>
 
                       <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">

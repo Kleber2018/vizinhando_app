@@ -11,7 +11,7 @@
   street?: string;
   number?: number;
   complement?: string;
- // anonymous?: boolean;
+  anonymous?: boolean;
   type?: string;
   createdAt?: any;
 }
