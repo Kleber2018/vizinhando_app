@@ -14,21 +14,33 @@
                       <mat-card-title>Informações</mat-card-title>
                   </mat-card-header>
 
-                  <mat-card-content >
-                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+                  <mat-card-content>
 
-                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="100%" fxFlex.md="100%" fxFlex.lg="100%">
-                              <mat-label>Descrição da Ocorrência</mat-label>
-                              <input
-                                      matInput
-                                      type="text"
-                                      minlength="1"
-                                      maxlength="250"
-                                      required="true"
-                                      placeholder="Descrição"
-                                      formControlName="description">
+                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+                          <mat-form-field style="margin: 0px 5px; margin-top: -10px;" appearance="outline" fxFlex="100%" fxFlex.sm="30%" fxFlex.md="30%" fxFlex.lg="30%">
+                              <mat-label>Data da Ocorrência</mat-label>
+                              <input matInput [matDatepicker]="picker"
+                                     [formControl]="ocurred_at_data">
+                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+
+                            <div style="margin: 0px" fxFlex="100%" fxFlex.sm="30%" fxFlex.md="30%" fxFlex.lg="30%">
+                                <div style="margin-top: -16px; height: 54px; margin-block-end: 16px;">
+                                    <ngx-timepicker-field [format]="24" [defaultTime]="'22:10'" [formControl]="ocurred_at_time"></ngx-timepicker-field>
+                                </div>
+                            </div>
+
+
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="40%" fxFlex.md="40%" fxFlex.lg="40%">
+                              <mat-label>Tipo de Ocorrência</mat-label>
+                              <mat-select disableRipple [formControl]="formType">
+                                  <mat-option  *ngFor="let type of types" [value]="type" >{{type}}</mat-option>
+                              </mat-select>
                           </mat-form-field>
                       </section>
+
 
                       <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
 
@@ -97,7 +109,7 @@
 
                       <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
 
-                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="76%" fxFlex.md="76%" fxFlex.lg="76%">
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="100%" fxFlex.md="100%" fxFlex.lg="100%">
                               <mat-label>Complemento</mat-label>
                               <input
                                       matInput
@@ -107,17 +119,20 @@
                                       placeholder="Complemento"
                                       formControlName="complement">
                           </mat-form-field>
+                      </section>
 
-                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="33.33%" fxFlex.md="33.33%" fxFlex.lg="33.33%">
-                              <mat-label>tipo</mat-label>
-                              <input
+                      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+
+                          <mat-form-field appearance="outline" fxFlex="100%" fxFlex.sm="100%" fxFlex.md="100%" fxFlex.lg="100%">
+                              <mat-label>Descrição da Ocorrência</mat-label>
+                              <textarea
                                       matInput
                                       type="text"
                                       minlength="1"
-                                      maxlength="30"
+                                      maxlength="250"
                                       required="true"
-                                      placeholder="Tipo"
-                                      formControlName="type">
+                                      placeholder="Descrição"
+                                      formControlName="description"></textarea>
                           </mat-form-field>
                       </section>
 
@@ -131,7 +146,7 @@
                                   type="submit"
                                   mat-raised-button
                                   color="primary"
-                                  [disabled]="(!formOcurrence.valid)"
+                                  [disabled]="(!formOcurrence.valid || !formType.valid || !ocurred_at_data.valid || !ocurred_at_time.valid)"
                                   (click)="submitFormUser()">
                               <mat-icon>done_all</mat-icon>
                               Salvar

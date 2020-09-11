@@ -28,7 +28,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   private end: Subject<boolean> = new Subject();
 
   public formLogin: FormGroup;
-
+  public urlServidor: string;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -45,6 +45,10 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     if (usuarioLogado) {
       this.router.navigate(['/user']);
     }
+
+    this.urlServidor = localStorage.getItem('urlServidor')
+        ? JSON.parse(localStorage.getItem('urlServidor'))
+        : 'https://vizinhando-backend.herokuapp.com';
    }
 
   ngOnInit(): void {
@@ -58,9 +62,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   private buildFormLogin(): void {
     this.formLogin = this.formBuilder.group({
-      eMail: ['', [ Validators.required, Validators.email ]],
+      eMail: ['klebers@alunos.utfpr.edu.br', [ Validators.required, Validators.email ]],
       password: ['', [ Validators.required ]],
-      url: ['https://vizinhando-backend.herokuapp.com', [ Validators.required ]]
+      url: [this.urlServidor, [ Validators.required ]]
     });
   }
 

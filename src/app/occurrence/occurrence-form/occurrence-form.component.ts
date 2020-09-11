@@ -21,11 +21,11 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
   private end: Subject<boolean> = new Subject();
 
-
   public formOcurrence: FormGroup;
-
-
-
+  public ocurred_at_data = new FormControl((new Date()),[Validators.required]);
+  public ocurred_at_time = new FormControl('01:03', [Validators.required]);
+  public types = ['assalto', 'agressao', 'covid', 'perturbacao', 'homicidio', 'atividade_suspeita', 'acidente', 'desaparecimento', 'animal_perdido']
+  public formType = new FormControl(null, [Validators.required]);
   public title = "Nova Ocorrência";
 
 
@@ -58,18 +58,19 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
 
    private buildFormOccurrence(): void {
+    this.ocurred_at_time.setValue(new Date().getHours()+':'+new Date().getMinutes())
     // console.log('construtor Form User', construtorUser.user);
     this.formOcurrence = this.formBuilder.group({
       description: [null, [Validators.required]] ,
       zip_code: [null, [ Validators.required]] ,
       latitude: 22,
       longitude: 22,
-      city: [null, [ Validators.required]] ,
+      city: ['Ponta Grossa', [ Validators.required]] ,
       neighborhood: [null, [ Validators.required]] ,
       street: [null, [ Validators.required]],
       number: [null, [ Validators.required]],
       complement: null,
-      type: [null, [ Validators.required]]
+      type: ['null', [ Validators.required]]
     })
   }
 
@@ -85,8 +86,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
       neighborhood: [buildOcurrence.neighborhood, [ Validators.required]] ,
       street: [buildOcurrence.street, [ Validators.required]],
       number: [buildOcurrence.number, [ Validators.required]],
-      complement: buildOcurrence.complement,
-      type: [buildOcurrence.type, [ Validators.required]]
+      complement: buildOcurrence.complement
     })
   }
 
@@ -108,6 +108,18 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
         )
       } else {
         const ocurrence: Occurrence = this.formOcurrence.value;
+
+        var dia = this.ocurred_at_data.value.getDate()
+        var mes = this.ocurred_at_data.value.getMonth();
+        var ano = this.ocurred_at_data.value.getFullYear();
+
+        var time = this.ocurred_at_time.value.split(':');
+        var hora = time[0];
+        var minuto = time[1];
+
+        ocurrence.ocurred_at = new Date( ano, mes, dia, hora, minuto).getTime();
+        ocurrence.type = this.formType.value;
+        console.log(ocurrence)
         this.occurrenceService.createOccurrence(ocurrence).then(r => {
           console.log('Salvo com sucesso nova Ocorrencia:', r);
        //   this.router.navigate(['/login']);

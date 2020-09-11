@@ -34,7 +34,7 @@ export class AuthenticationService {
 
 
   public logout(): void {
-    localStorage.removeItem('urlServidor');
+   // localStorage.removeItem('urlServidor');
     localStorage.removeItem('userEquipe2');
     sessionStorage.removeItem('userEquipe2');
     sessionStorage.removeItem('userEquipe2token');

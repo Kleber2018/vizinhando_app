@@ -19,6 +19,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 
 
 
@@ -27,17 +28,18 @@ import { MatInputModule } from '@angular/material/input';
 registerLocaleData(localeBr, 'pt')
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    OccurrenceRoutingModule,
-    SharedModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        OccurrenceRoutingModule,
+        SharedModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgxMaterialTimepickerModule
+    ],
   declarations: [
     OccurrenceFormComponent,
     OccurrenceListComponent,

@@ -1,6 +1,6 @@
  export interface Occurrence {
   _id?: string;
-  user_id?: string;
+  user_id?: string;// opcional para anônimo
   ocurred_at?: any; //timestamp
   description?: string;
   zip_code?: string;
@@ -11,7 +11,7 @@
   street?: string;
   number?: number;
   complement?: string;
-  anonymous?: boolean;
+ // anonymous?: boolean;
   type?: string;
   createdAt?: any;
 }
