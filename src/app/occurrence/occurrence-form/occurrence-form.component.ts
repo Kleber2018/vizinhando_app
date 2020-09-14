@@ -125,11 +125,26 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
         console.log(ocurrence)
         this.occurrenceService.createOccurrence(ocurrence).then(r => {
           console.log('Salvo com sucesso nova Ocorrencia:', r);
-       //   this.router.navigate(['/login']);
+
+          const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+            data: {descricao:"Salvo com sucesso"}
+          });
+          dialogRefAlert.afterClosed().toPromise().then(() => {
+            this.buildFormOccurrence(); 
+            this.router.navigate(['/ocorrencia']); 
+          })
         }).catch(error => {
             if (error.error){
+              const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+                data: {descricao:error.error}
+              });
+              dialogRefAlert.afterClosed().toPromise()
               console.log('Retornou Erro:',error.error);
             } else {
+              const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+                data: {descricao:error}
+              });
+              dialogRefAlert.afterClosed().toPromise()
               console.log('Retornou Erro:',error);
             }
           }

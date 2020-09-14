@@ -134,4 +134,3 @@ DEPOIS DE CONFIGURADO O FIREBASE:
 
   ```firebase deploy```
 
-app6

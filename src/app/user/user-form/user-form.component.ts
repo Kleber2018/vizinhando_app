@@ -7,6 +7,7 @@ import {AuthenticationService} from "../../authentication/authentication.service
 import {MatInput} from "@angular/material/input";
 import {ValidateFn} from "codelyzer/walkerFactory/walkerFn";
 import {Subject} from "rxjs";
+import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-user-form',
@@ -38,7 +39,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
       private  authenticationService:  AuthenticationService,
       private router: Router,
       private formBuilder: FormBuilder,
-      private activatedRoute: ActivatedRoute
+      private activatedRoute: ActivatedRoute,
+      public dialog: MatDialog
   ) {
     this.userLogado = sessionStorage.getItem('userEquipe2token')
         ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
@@ -135,12 +137,25 @@ export class UserFormComponent implements OnInit, OnDestroy {
       } else {
         this.userService.criarUser(this.formUser.value).then(r => {
           console.log('Salvo com sucesso novo user:', r);
-          this.router.navigate(['/login']);
+          const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+            data: {descricao:"Salvo com sucesso"}
+          });
+          dialogRefAlert.afterClosed().toPromise().then(() => {
+            this.router.navigate(['/login']); 
+          })
         }).catch(error => {
             if (error.error){
-              console.log('Retornou Erro:',error.error);
+              console.log('Retornou Erro:', error.error);
+              const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+                data: {descricao:error.error}
+              });
+              dialogRefAlert.afterClosed().toPromise()
             } else {
-              console.log('Retornou Erro:',error);
+              const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+                data: {descricao:error}
+              });
+              dialogRefAlert.afterClosed().toPromise()
+              console.log('Retornou Erro:', error);
             }
           }
         )
