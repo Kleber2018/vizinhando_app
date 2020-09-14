@@ -74,7 +74,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         .then(r => {
           console.log('retorno login', r);
           sessionStorage.setItem('userEquipe2token', JSON.stringify(r));
-          this.router.navigate(['/user']);
+          this.router.navigate(['/ocorrencia']);
         }).catch(error => {
             console.log('erro 96', error)
             this.formLogin.get('password').setValue('');
@@ -88,6 +88,12 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.value.url));
       this.router.navigate(['/user']);
     }
+  }
+
+  selecionandoServidor(url: string){
+    localStorage.setItem('urlServidor', JSON.stringify(url));
+    this.urlServidor = url;
+    this.buildFormLogin()
   }
 
 

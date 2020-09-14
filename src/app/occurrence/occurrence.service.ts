@@ -36,7 +36,16 @@ export class OccurrenceService {
       ? JSON.parse(localStorage.getItem('urlServidor'))
       : null;
 
-      return this.http.post(`${apiURL}/occurrence`, occurrence).toPromise();
+
+      const token =  sessionStorage.getItem('userEquipe2token')
+      ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
+      : null;
+
+  const headers = new HttpHeaders()
+                      .set('Content-Type', 'application/json')
+                      .set('Authorization', token.token);
+
+      return this.http.post(`${apiURL}/ocurrences`, occurrence, {headers: headers}).toPromise();
     }
 
 
@@ -56,7 +65,7 @@ export class OccurrenceService {
       .set('Content-Type', 'application/json')
       .set('Authorization', token.token);
 
-  return this.http.put(`${apiURL}/occurrence`, occurrence, {headers: headers}).toPromise();
+  return this.http.put(`${apiURL}/ocurrences`, occurrence, {headers: headers}).toPromise();
     }
 
 
@@ -74,7 +83,7 @@ export class OccurrenceService {
                         .set('Content-Type', 'application/json')
                         .set('Authorization', token.token);
 
-      return this.http.get(`${apiURL}/occurrence`, {headers: headers}).toPromise();
+      return this.http.get(`${apiURL}/ocurrences`, {headers: headers}).toPromise();
     }
 
     getOccurrences() {
@@ -90,7 +99,7 @@ export class OccurrenceService {
           .set('Content-Type', 'application/json')
           .set('Authorization', token.token);
 
-      return this.http.get(`${apiURL}/occurrences`, {headers: headers}).toPromise();
+      return this.http.get(`${apiURL}/ocurrences`, {headers: headers}).toPromise();
     }
 
 

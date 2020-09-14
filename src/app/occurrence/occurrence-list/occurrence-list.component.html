@@ -1,13 +1,23 @@
  <main class="main" fxFlex="100%" fxLayout="column">
    <app-header></app-header>
-    <section fxLayout="column" style="padding: 16px">
+
+
+    <section fxLayout="column" style="padding: 16px" *ngIf="ocurrences">
         <h3>{{title}}</h3>
-    
-        <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let ocorrencia of ocorrencias">
+        <h4 *ngIf="ocurrences.length == 0">Nenhuma ocorrência na sua Região</h4>
+        <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let ocurrence of ocurrences">
           <mat-card fxFlex="95%"  fxLayout="row" fxLayoutAlign="space-between start">
-            <mat-card-content fxFlex="100%" fxLayout="column" class="card-content" >
-                        
-              {{ocorrencia.status}}
+            <mat-card-content fxFlex="100%" fxLayout="column" fxLayoutAlign="space-between start" class="card-content" >
+             <p>{{ocurrence._id}}</p> 
+             <p>{{ocurrence.created_at}}</p>       
+             <p>{{ocurrence.city}}</p>
+             <p>{{ocurrence.neighborhood}}</p>
+             <p>{{ocurrence.street}}</p>
+             <p>{{ocurrence.number}}</p>
+             <p>{{ocurrence.complement}}</p>
+             <p>{{ocurrence.type}}</p>
+             <p>{{ocurrence.user_name}}</p>
+             <p>{{ocurrence.description}}</p>
             </mat-card-content> 
           </mat-card>
           <mat-divider></mat-divider>
