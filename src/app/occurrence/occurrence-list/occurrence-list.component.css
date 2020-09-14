@@ -3,6 +3,7 @@
   min-height: calc(100vh - 52px);
 }
 
+p{margin: 0px;}
 
 
 mat-form-field {

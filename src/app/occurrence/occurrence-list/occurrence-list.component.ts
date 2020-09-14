@@ -24,7 +24,7 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
 
   public title = 'Lista de Ocorrências';
   public ocorrencias = [{status: 22}, {status: 33},{status: 22}, {status: 33}];
-  public Occurrences: any;
+  public ocurrences: any;
   constructor(private router: Router,
               private occurrenceService: OccurrenceService,
               private authenticationService: AuthenticationService,
@@ -35,7 +35,8 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
   buildOccurrences(){
       this.occurrenceService.getOccurrences().then(occurrencesRetorno => {
         console.log('Retornou Occurrences', occurrencesRetorno);
-      }).catch(error => {
+        this.ocurrences = occurrencesRetorno
+            }).catch(error => {
             if (error.error){
               console.log('Retornou Erro de Ocorrências:',error.error);
             } else {
