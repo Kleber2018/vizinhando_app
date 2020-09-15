@@ -1,8 +1,4 @@
 import { Injectable } from '@angular/core';
-
-import * as firebase from 'firebase/app';
-import { take, first, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Occurrence } from './occurrence.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -12,24 +8,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class OccurrenceService {
 
-
+//construtor
   constructor( private http : HttpClient) {  }
 
-    getTimeZone() {
-      return new Date().toString()
-    }
 
-    // LOCAL
-    setLocalOccurrence(occurrence: Occurrence) {
-      if(occurrence.createdAt == ''){ //para ter o horário do inicio do pedido
-        occurrence.createdAt = this.getTimeZone();  
-      }
-      localStorage.setItem('occurrence', JSON.stringify(occurrence));
-    }
-
-
-
-    createOccurrence(occurrence: Occurrence) {
+    //Requisição POST para criar nova ocorrência
+  createOccurrence(occurrence: Occurrence) {
       console.log('criando ocorrencia', occurrence)
 
       const apiURL = localStorage.getItem('urlServidor')
@@ -41,15 +25,15 @@ export class OccurrenceService {
       ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
       : null;
 
-  const headers = new HttpHeaders()
+      const headers = new HttpHeaders()
                       .set('Content-Type', 'application/json')
                       .set('Authorization', token.token);
 
       return this.http.post(`${apiURL}/ocurrences`, occurrence, {headers: headers}).toPromise();
-    }
+  }
 
 
-
+    //requisição PUT para alterar ocorrência
     updateOccurrence(occurrence: Occurrence) {
       console.log('update ocorrencia', occurrence)
 
@@ -70,6 +54,7 @@ export class OccurrenceService {
 
 
 
+//requisição get para recuperar os dados de uma ocorrência pelo id
     getOccurrence(id: string) {
       const apiURL = localStorage.getItem('urlServidor')
         ? JSON.parse(localStorage.getItem('urlServidor'))
@@ -86,6 +71,8 @@ export class OccurrenceService {
       return this.http.get(`${apiURL}/ocurrences`, {headers: headers}).toPromise();
     }
 
+
+    //requisição get para recuperar array de ocorrências
     getOccurrences() {
       const apiURL = localStorage.getItem('urlServidor')
           ? JSON.parse(localStorage.getItem('urlServidor'))
@@ -103,7 +90,7 @@ export class OccurrenceService {
     }
 
 
-
+    //requisição para deletar ocorrências
     deleteOccurrence(id: string) {
       console.log('delete ocorrencia', id)
       return true

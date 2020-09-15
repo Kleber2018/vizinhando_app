@@ -32,16 +32,19 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticationService: AuthenticationService,
-    // private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private location: Location,
     private router: Router,
     public dialog: MatDialog
   ) {
+    //construtor: executa ao carregar a página
+
+    //buscando usuário armazenado no session storage
     const usuarioLogado: User = sessionStorage.getItem('userEquipe2')
     ? JSON.parse(sessionStorage.getItem('userEquipe2'))
     : null;
 
+    //se existir um usuário significa que já está logado, então direciona para a tela user
     if (usuarioLogado) {
       this.router.navigate(['/user']);
     }
@@ -51,15 +54,18 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         : 'https://vizinhando-backend.herokuapp.com';
    }
 
+  //framework
   ngOnInit(): void {
     this.buildFormLogin();
   }
 
+  //framework
   ngOnDestroy(): void {
     this.end.next();
     this.end.complete();
   }
 
+  //construtor do form login
   private buildFormLogin(): void {
     this.formLogin = this.formBuilder.group({
       eMail: ['klebers@alunos.utfpr.edu.br', [ Validators.required, Validators.email ]],
@@ -68,36 +74,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  private login(eMail: string, password: string): void {
-    try {
-      this.authenticationService.login(eMail.toLowerCase(), password)
-        .then(r => {
-          console.log('retorno login', r);
-          sessionStorage.setItem('userEquipe2token', JSON.stringify(r));
-          this.router.navigate(['/ocorrencia']);
-        }).catch(error => {
-            console.log('erro 96', error)
-            this.formLogin.get('password').setValue('');
-          }
-        )
-    }  catch (e) {}
-  }
-
-  abrirFormNovoUser(){
-    if(this.formLogin.value.url !== ''){
-      localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.value.url));
-      this.router.navigate(['/user']);
-    }
-  }
-
-  selecionandoServidor(url: string){
-    localStorage.setItem('urlServidor', JSON.stringify(url));
-    this.urlServidor = url;
-    this.buildFormLogin()
-  }
-
-
-  public submitFormLogin(): void {
+   //chamado pelo botão Acessar Sistema para dar continuidade no login
+   public submitFormLogin(): void {
     if (this.formLogin.valid) {
       localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.get('url').value));
       this.login(
@@ -107,31 +85,58 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  //chamado pelo submitFormLogin()
+  private login(eMail: string, password: string): void {
+    try {
+      this.authenticationService.login(eMail.toLowerCase(), password)
+        .then(r => {
+          console.log('retorno login', r);
+          sessionStorage.setItem('userEquipe2token', JSON.stringify(r));
+          this.router.navigate(['/ocorrencia']);
+        }).catch(error => {
+            console.log('senha inválida', error)
+            this.formLogin.get('password').setValue('');
+          }
+        )
+    }  catch (e) {}
+  }
+
+  // chamado pelo botão novo Usuario para direcionar para a pafina de form de usuário
+  abrirFormNovoUser(){
+    if(this.formLogin.value.url !== ''){
+      localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.value.url));
+      this.router.navigate(['/user']);
+    }
+  }
+
+  //para carregar a url do servidor da equipe selecionada no input do login
+  selecionandoServidor(url: string){
+    localStorage.setItem('urlServidor', JSON.stringify(url));
+    this.urlServidor = url;
+    this.buildFormLogin()
+  }
+
+  //chamado pelo botão esqueci a senha para abrir a caixa de esqueci a senha
   async esqueciMinhaSenha(){
     localStorage.setItem('urlServidor', JSON.stringify(this.formLogin.get('url').value));
     const dialogRefRedefinicao = this.dialog.open(EsqueciSenhaDialogComponent, {
       minWidth: 301,
-      // minWidth: 400,
       data: this.formLogin.value.eMail
     });
     var retornoRedefinicao =  await dialogRefRedefinicao.afterClosed().toPromise()
-    if(retornoRedefinicao == 'enviado'){
+
       const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
         data: {descricao:"Verifique sua caixa de e-mail o link de redefinição da senha"}
       });
       dialogRefAlert.afterClosed().toPromise()
-    } else {
-      const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
-        data: {descricao:"E-mail não encontrado"}
-      });
-      dialogRefAlert.afterClosed().toPromise()
-    }
   }
 
+  // gerado pelo framework
   public togglePasswordVisibility(input_password: MatInput): void {
     input_password.type = input_password.type === 'text' ? 'password' : 'text';
   }
 
+  //chama o a funcção logout que se encarrega de fazer o correto logout do usuário
   public logout(): void {
     this.authenticationService.logout();
   }

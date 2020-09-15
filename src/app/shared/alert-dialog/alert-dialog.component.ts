@@ -1,7 +1,6 @@
+//MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA GERAR A CAIXA DE ALERTA
 import { Component, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-
-
 
 
 @Component({

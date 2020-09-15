@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 /**Third party modules.*/
-import { AngularFireAuth } from '@angular/fire/auth';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {tryCatch} from "rxjs/internal-compatibility";
 import {User} from "../shared/model/user.model";
 
 
@@ -18,7 +16,9 @@ export class AuthenticationService {
     private router: Router
   ) { }
 
+  //para fazer a requisição de login no servidor
   public login(eMail: string, password: string): Promise<any>  {
+    //buscando url do servidor no localstorage
       const apiURL = localStorage.getItem('urlServidor')
           ? JSON.parse(localStorage.getItem('urlServidor'))
           : null;
@@ -33,14 +33,16 @@ export class AuthenticationService {
    }
 
 
+   //executando a correto logout do usuário no sistema
   public logout(): void {
-   // localStorage.removeItem('urlServidor');
     localStorage.removeItem('userEquipe2');
     sessionStorage.removeItem('userEquipe2');
     sessionStorage.removeItem('userEquipe2token');
     this.router.navigate(['/login']);
   }
 
+  
+  //solicitando redefinição de password para o servidor
   public redefinePassword(eMail: string){
       const apiURL = localStorage.getItem('urlServidor')
           ? JSON.parse(localStorage.getItem('urlServidor'))

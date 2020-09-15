@@ -1,3 +1,4 @@
+//MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA COMPARTILHAR OS MÓDULOS DE BIBLIOTECAS DE TERCEIROS
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

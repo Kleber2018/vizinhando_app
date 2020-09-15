@@ -1,3 +1,4 @@
+//MODELO DE INTERFACE DOS ATRIBUTOS DO USER
 export interface User {
     _id?: string;
     name?: string;

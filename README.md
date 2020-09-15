@@ -2,6 +2,51 @@
 App em Angular para o projeto da disciplina cliente servidor CLiente Servidor
 
 
+Desenvolvido por Kleber e Michel
+
+
+O código não gerado automáticamentepelo framework está nas pastas 
+
+
+src/app/user => usuário
+
+src/app/ocurrence => ocorrências
+
+src/app/authentication => login e authenticação
+
+
+
+As funções utilizadas estão com comentário nós arquivos com os respectivos nomes:
+
+(...)-form.(...).ts => se refere á formulários de cadastro e update
+
+(...)-list.(..).ts => se refere a lista
+
+(...).service.ts => se refere ao módulo de comunicação direta com o servidor
+
+
+Nomes de arquivos com final:
+
+
+.ts são das regras de back end do framework
+
+.css são da estilização css do html daquele módulo
+
+.html são do html da página com regras executadas no (...).component.ts
+
+.spec.ts são criadas automatícamente pelo framework para criar políticas de teste
+
+
+
+
+
+
+
+
+
+
+
+
 ## DOCUMENTAÇÃO ANGULAR
 https://angular.io/
 
@@ -39,14 +84,6 @@ ou atualizar globalmente:
     npm install
 ```
 
-## COMPILANDO O PROJETO
-
-https://github.com/Kleber2018/form.git
-
-Na pasta do projeto executar o comando para instalar as dependencias:
-
-    ```npm install```
-    ```npm install firebase @angular/fire```
  
 ## EXECUÇÃO
 
@@ -68,9 +105,6 @@ Para add todas as alterações na lista de commit
 
         git commit -m "Comentário!" - feito pelo vc code
 
-
-
-ssda
         ou
 
         confirma via VS code
@@ -90,19 +124,6 @@ ssda
 
 **MANUAL:**
     https://rogerdudler.github.io/git-guide/index.pt_BR.html
-
-
-## COMPONENTES EXTERNOS
-
-    Biblioteca Angular/fire para FIrebase:
-        https://www.npmjs.com/package/@angular/fire
-
-    TIME PICKER
-    	https://www.npmjs.com/package/ngx-material-timepicker
- 
- ## TEMPLATE
-
-https://material.angular.io
 
 
  ## CONFIGURAÇÃO, BUILD E DEPLOY NO FIREBASE
@@ -130,7 +151,5 @@ Configurando (Para caso preciso trocar a conta do Firebase, ver mais detalhes na
 
 DEPOIS DE CONFIGURADO O FIREBASE:
 
-  ```ng build```
-
-  ```firebase deploy```
+  ```ng build && firebase deploy```
 

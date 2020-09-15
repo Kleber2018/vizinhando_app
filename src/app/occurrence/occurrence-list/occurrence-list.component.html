@@ -8,16 +8,22 @@
         <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let ocurrence of ocurrences">
           <mat-card fxFlex="95%"  fxLayout="row" fxLayoutAlign="space-between start">
             <mat-card-content fxFlex="100%" fxLayout="column" fxLayoutAlign="space-between start" class="card-content" >
-             <p>{{ocurrence._id}}</p> 
-             <p>{{ocurrence.created_at}}</p>       
-             <p>{{ocurrence.city}}</p>
-             <p>{{ocurrence.neighborhood}}</p>
-             <p>{{ocurrence.street}}</p>
-             <p>{{ocurrence.number}}</p>
-             <p>{{ocurrence.complement}}</p>
-             <p>{{ocurrence.type}}</p>
-             <p>{{ocurrence.user_name}}</p>
-             <p>{{ocurrence.description}}</p>
+             <div fxLayout="row" >
+              <p style="margin-right: 16px;">{{ocurrence._id}}</p>              
+              <p >{{ocurrence.ocurred_at | date:'dd/MM/yy HH:mm'}}</p>
+             </div>
+             <p *ngIf="ocurrence.user_name">{{ocurrence.user_name}}</p>
+             <div fxLayout="row" >
+              <p style="margin-right: 16px;"><b>Cidade: </b>{{ocurrence.city}}</p>
+              <p><b>Bairro: </b>{{ocurrence.neighborhood}}</p>
+             </div>     
+             <div fxLayout="row" >
+              <p><b>Rua: </b>{{ocurrence.street}},</p>
+              <p *ngIf="ocurrence.number">{{ocurrence.number}}</p>
+             </div>
+             <p *ngIf="ocurrence.complement"><b>Complemento: </b>{{ocurrence.complement}}</p>
+             <p><b>Ocorrência: </b>{{ocurrence.type}}</p>
+             <p><b>Descrição: </b>{{ocurrence.description}}</p>
             </mat-card-content> 
           </mat-card>
           <mat-divider></mat-divider>

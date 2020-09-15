@@ -19,6 +19,7 @@ export class EsqueciSenhaDialogComponent {
               public dialogRef: MatDialogRef<EsqueciSenhaDialogComponent>,
               private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,) {
+                //construtor
                 this.email = data;
                 if(data){
                   this.buildFormLogin(data)
@@ -28,26 +29,26 @@ export class EsqueciSenhaDialogComponent {
                 }
               }
 
-
+  //carregando input de e-mail
   private buildFormLogin(email: string): void {
     this.formEmail = this.formBuilder.group({
       eMail: [email, [ Validators.required, Validators.email ]]
     });
   }
 
+  //ao clicar no boitão de redefinir senha é submetido o e-mail do input
   public async submitFormEmail(): Promise<void> {
     if (this.formEmail.valid) {
       console.log(this.formEmail.value.eMail)
         var retorno = await this.authenticationService.redefinePassword(this.formEmail.value.eMail.toLowerCase())
             .then(r => {
             console.log('sucesso', r);
-                this.dialogRef.close('enviado');
+               
         }).catch(error => {
-                console.log('erro 45 esqueci a senha', error)
-                this.dialogRef.close('erro');
-            }
+          console.log(error)
+          }
         )
+        this.dialogRef.close('enviado');
     }
-  }
-            
+  }       
 }

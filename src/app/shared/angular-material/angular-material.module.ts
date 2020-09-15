@@ -1,3 +1,4 @@
+//MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA IMPORTAR AS BIBLIOTECAS DA INTERFACE COM MATERIAL DESIGNER
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

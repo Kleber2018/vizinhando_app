@@ -8,6 +8,7 @@ import {MatInput} from "@angular/material/input";
 import {ValidateFn} from "codelyzer/walkerFactory/walkerFn";
 import {Subject} from "rxjs";
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-form',
@@ -21,6 +22,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   public userLogado: any;
   public formUser: FormGroup;
 
+  //Populando um usuário com campos vazios para melhorar o carregamento do form
   public user = {
     name: '' ,
     email: '' ,
@@ -42,10 +44,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
       private activatedRoute: ActivatedRoute,
       public dialog: MatDialog
   ) {
+    //construtor
     this.userLogado = sessionStorage.getItem('userEquipe2token')
         ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
         : null;
 
+    //se não existir um token ele solicita os demais dados do usuário para o servidor, para popular os inputs do form
     if (this.userLogado) {
       console.log('sessionStorage User', this.userLogado);
       setTimeout(() => {
@@ -67,12 +71,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  //framework
   ngOnInit(): void {
   }
 
 
+  //carregando o form com dados nulos para cadastrar novo usuário
   private construtorFormUserCreate(construtorUser: any): void {
-    // console.log('construtor Form User', construtorUser.user);
     this.formUser = this.formBuilder.group({
       name: [null, [Validators.required]] ,
       email: [null, [Validators.required, Validators.email]] ,
@@ -90,6 +95,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
 
+  //carregando o form com dados do usuário logado
   private construtorFormUserUpdate(construtorUser: any): void {
     if(construtorUser.user){
       this.user = construtorUser.user;
@@ -113,7 +119,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     })
   }
 
-
+// chamado pelo botão salvar para submeter um update ou criação de usuário
   submitFormUser(){
     console.log(this.formUser.value)
     if(this.formUser.valid){
@@ -163,14 +169,17 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  //gerado pelo framework para ocultar os digitos da senha
   public togglePasswordVisibility(input_password: MatInput): void {
     input_password.type = input_password.type === 'text' ? 'password' : 'text';
   }
 
+  //para chamar o correto logout do usuário
   Logout(){
     this.authenticationService.logout();
   }
 
+  //gerado pelo framework - boas práticas para finalizar as funções quando a página não estiver sendo exibida
   ngOnDestroy(): void {
     this.end.next();
     this.end.complete();

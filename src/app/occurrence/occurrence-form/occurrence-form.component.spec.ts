@@ -1,3 +1,5 @@
+//GERADO AUTOMATICAMENTE PELO FRAMEWORK PARA GERAR POLITICAS DE TESTE AUTOMATIZADO
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OccurrenceFormComponent } from './occurrence-form.component';

@@ -1,3 +1,4 @@
+// MÓDULO GERADO PELO FRAMEWORK ANGULAR
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

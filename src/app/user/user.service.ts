@@ -1,3 +1,4 @@
+////MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA FAZER A PONTE COM O SERVIDOR
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../shared/model/user.model";
@@ -11,7 +12,9 @@ export class UserService {
       private http : HttpClient
   ) { }
 
+  //Requisição POST para criar usuário
   public criarUser(user: any){
+    //buscando a url do servidor no localstorage
     const apiURL = localStorage.getItem('urlServidor')
         ? JSON.parse(localStorage.getItem('urlServidor'))
         : null;
@@ -19,6 +22,7 @@ export class UserService {
     return this.http.post(`${apiURL}/user`, user).toPromise();
   }
 
+  //Requisição GET para buscar as informações do usuário
   public buscarUser(){
     const apiURL = localStorage.getItem('urlServidor')
         ? JSON.parse(localStorage.getItem('urlServidor'))
@@ -35,6 +39,7 @@ export class UserService {
       return this.http.get(`${apiURL}/me`, {headers: headers}).toPromise();
   }
 
+  //requisição PUT para enviar os dados do usuário que vai ser atualizado
   public updateUser(user: User){
     const apiURL = localStorage.getItem('urlServidor')
         ? JSON.parse(localStorage.getItem('urlServidor'))
@@ -50,5 +55,4 @@ export class UserService {
 
     return this.http.put(`${apiURL}/user`, user, {headers: headers}).toPromise();
   }
-
 }

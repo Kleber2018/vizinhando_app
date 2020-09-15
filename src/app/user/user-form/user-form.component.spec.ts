@@ -1,3 +1,4 @@
+//GERADO AUTOMATICAMENTE PELO FRAMEWORK PARA GERAR POLITICAS DE TESTE AUTOMATIZADO
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserFormComponent } from './user-form.component';

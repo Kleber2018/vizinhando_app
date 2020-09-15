@@ -1,3 +1,4 @@
+//MODELO DE INTERFACE DOS ATRIBUTOS DA OCORRENCIA
  export interface Occurrence {
   _id?: string;
   user_id?: string;// opcional para anônimo

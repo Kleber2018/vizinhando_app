@@ -10,7 +10,7 @@ import { OccurrenceService } from '../occurrence.service'
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
-import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-occurrence-form',
@@ -21,14 +21,13 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
   private end: Subject<boolean> = new Subject();
 
+  //instanciando as variáveis
   public formOcurrence: FormGroup;
   public ocurred_at_data = new FormControl((new Date()),[Validators.required]);
   public ocurred_at_time = new FormControl('01:03', [Validators.required]);
   public types = ['assalto', 'agressao', 'covid', 'perturbacao', 'homicidio', 'atividade_suspeita', 'acidente', 'desaparecimento', 'animal_perdido']
   public formType = new FormControl(null, [Validators.required]);
   public title = "Nova Ocorrência";
-
-
   public formCheckboxAnonymous = new FormControl(false);
 
   constructor(private router: Router,
@@ -38,8 +37,11 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute
 ) {
-    if (this.activatedRoute.snapshot.params.id) { // caso venha um id é UPDATE
+  //construtor
+  //se existir um parâmetro id na url significa que é uma edição de ocorrencia, caso contrário é insert
+    if (this.activatedRoute.snapshot.params.id) { //UPDATE
       this.title = 'editar Ocorrência';
+      //buscando dados da ocorrencia que vai ser alterada
       this.occurrenceService.getOccurrence(this.activatedRoute.snapshot.params.id).then(ocurrenceRetorno => {
         console.log('Retornou /ocurrence', ocurrenceRetorno);
         this.buildFormOcurrenceUpdate(ocurrenceRetorno);
@@ -56,12 +58,14 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  //framework
   ngOnInit() {    }
 
 
+  //carregando com dados nulos para criar uma nova ocorrência
    private buildFormOccurrence(): void {
     this.ocurred_at_time.setValue(new Date().getHours()+':'+new Date().getMinutes())
-    // console.log('construtor Form User', construtorUser.user);
+
     this.formOcurrence = this.formBuilder.group({
       description: [null, [Validators.required]] ,
       zip_code: [null, [ Validators.required]] ,
@@ -77,8 +81,8 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
   }
 
 
+  //Carregando com dados da ocorrencia para alteração
   private buildFormOcurrenceUpdate(buildOcurrence: Occurrence): void {
-
     this.formOcurrence = this.formBuilder.group({
       description: buildOcurrence.description ,
       zip_code: [buildOcurrence.zip_code, [ Validators.required]] ,
@@ -92,11 +96,15 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  //Chamado pelo botão salvar da ocorrência
   submitFormUser(){
     console.log(this.formOcurrence.value)
-    if(this.formOcurrence.valid){
-      if(this.activatedRoute.snapshot.params.id){
+    if(this.formOcurrence.valid){ //verificando se todos os campos obrigatórios foram preenchidos
+      if(this.activatedRoute.snapshot.params.id){ //se veio um id na url significa que é uma requisição de update
         const ocurrence: Occurrence = this.formOcurrence.value;
+
+        //requisição de update no banco
         this.occurrenceService.updateOccurrence(ocurrence)
             .then(r => {
           console.log('Atualizado com sucesso a ocorrencia:', r);
@@ -108,9 +116,10 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
               }
             }
         )
-      } else {
-        const ocurrence: Occurrence = this.formOcurrence.value;
+      } else { // caso contrário é um insert
+        const ocurrence: Occurrence = this.formOcurrence.value; //atribuindo valor do form
 
+        //convertendo data e hora
         var dia = this.ocurred_at_data.value.getDate()
         var mes = this.ocurred_at_data.value.getMonth();
         var ano = this.ocurred_at_data.value.getFullYear();
@@ -118,11 +127,14 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
         var time = this.ocurred_at_time.value.split(':');
         var hora = time[0];
         var minuto = time[1];
-
         ocurrence.ocurred_at = new Date( ano, mes, dia, hora, minuto).getTime();
+
+        //atribuindo tipo de ocorrência da caixa de seleção
         ocurrence.type = this.formType.value;
+        //atribuindo seleção do checkbox anonymous
         ocurrence.anonymous = this.formCheckboxAnonymous.value;
-        console.log(ocurrence)
+
+        //requisição de insert no banco
         this.occurrenceService.createOccurrence(ocurrence).then(r => {
           console.log('Salvo com sucesso nova Ocorrencia:', r);
 
@@ -133,6 +145,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
             this.buildFormOccurrence(); 
             this.router.navigate(['/ocorrencia']); 
           })
+
         }).catch(error => {
             if (error.error){
               const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
@@ -153,10 +166,12 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  //para executar o correto logout do usuário
   Logout(){
     this.authenticationService.logout();
   }
   
+  //gerado pelo framework, boas práticas
   ngOnDestroy(): void {
     this.end.next();
     this.end.complete();

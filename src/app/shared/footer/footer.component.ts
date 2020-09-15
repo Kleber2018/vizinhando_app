@@ -1,3 +1,4 @@
+//MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA CRIAR O COMPONENTE FOOTER QUE REPETE NAS PRINCIPAIS PÁGINAS
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 

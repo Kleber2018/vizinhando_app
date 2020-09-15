@@ -1,3 +1,4 @@
+//MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA CRIAR O TOOLBAR DAS PÁGINAS QUE O U´SARIO ESTÁ LOGADO
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import {Router} from "@angular/router";
@@ -19,11 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private authenticationService: AuthenticationService) {  }
 
-  ngOnInit(): void {}
-
-
-
-   
+  ngOnInit(): void {}  
 
   ngOnDestroy(): void {
     this.end.next();

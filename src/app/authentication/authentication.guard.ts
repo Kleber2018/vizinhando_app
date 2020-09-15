@@ -1,3 +1,5 @@
+//MÓDULO GERADO PELO FRAMEWORK ANGULAR PARA GUARDA DE ROTAS - NÃO ESTAMOS UTILIZANDO NO PROJETO PARA FACILITAR NOS TESTES
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
