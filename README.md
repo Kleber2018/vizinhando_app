@@ -16,6 +16,7 @@ src/app/authentication => login e authenticação
 
 
 
+
 As funções utilizadas estão com comentário nós arquivos com os respectivos nomes:
 
 (...)-form.(...).ts => se refere á formulários de cadastro e update
@@ -23,6 +24,7 @@ As funções utilizadas estão com comentário nós arquivos com os respectivos 
 (...)-list.(..).ts => se refere a lista
 
 (...).service.ts => se refere ao módulo de comunicação direta com o servidor
+
 
 
 Nomes de arquivos com final:

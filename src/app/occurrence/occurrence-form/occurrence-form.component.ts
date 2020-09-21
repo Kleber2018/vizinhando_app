@@ -93,7 +93,9 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
       street: [buildOcurrence.street, [ Validators.required]],
       number: [buildOcurrence.number, [ Validators.required]],
       complement: buildOcurrence.complement
-    })
+    });
+
+   this.formCheckboxAnonymous.setValue(buildOcurrence.anonymous);
   }
 
 
@@ -103,6 +105,21 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     if(this.formOcurrence.valid){ //verificando se todos os campos obrigatórios foram preenchidos
       if(this.activatedRoute.snapshot.params.id){ //se veio um id na url significa que é uma requisição de update
         const ocurrence: Occurrence = this.formOcurrence.value;
+
+        //convertendo data e hora
+        var dia = this.ocurred_at_data.value.getDate()
+        var mes = this.ocurred_at_data.value.getMonth();
+        var ano = this.ocurred_at_data.value.getFullYear();
+
+        var time = this.ocurred_at_time.value.split(':');
+        var hora = time[0];
+        var minuto = time[1];
+        ocurrence.ocurred_at = new Date( ano, mes, dia, hora, minuto).getTime();
+
+        //atribuindo tipo de ocorrência da caixa de seleção
+        ocurrence.type = this.formType.value;
+        //atribuindo seleção do checkbox anonymous
+        ocurrence.anonymous = this.formCheckboxAnonymous.value;
 
         //requisição de update no banco
         this.occurrenceService.updateOccurrence(ocurrence)

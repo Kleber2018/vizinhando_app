@@ -1,37 +1,55 @@
  <main class="main" fxFlex="100%" fxLayout="column">
    <app-header></app-header>
+     <section fxLayout="row" fxLayout.xs="row wrap">
+         <section fxLayout="column" style="padding: 16px" *ngIf="ocurrences" fxFlex="100%" fxFlex.sm="50%" fxFlex.md="50%" fxFlex.lg="50%">
+             <div fxLayout="row" fxLayoutAlign="space-between center">
+                 <h3>{{title}}</h3>
+                 <mat-checkbox [formControl]="formCheckboxMinhasOcorrencias" (click)="buildMyOccurrences()">Minhas</mat-checkbox>
+             </div>
+             <h4 *ngIf="ocurrences.length == 0">Nenhuma ocorrência na sua Região</h4>
+             <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let ocurrence of ocurrences">
+                 <mat-card fxFlex="98%"  fxLayout="row" fxLayoutAlign="space-between start" style="max-width: 340px">
+                     <mat-card-content fxFlex="100%" fxLayout="column" fxLayoutAlign="space-between start" class="card-content" >
+                         <div fxLayout="row" >
+                             <p style="margin-right: 16px;">{{ocurrence._id}}</p>
+                             <p >{{ocurrence.ocurred_at | date:'dd/MM/yy HH:mm'}}</p>
+                         </div>
+                         <p *ngIf="ocurrence.user_name">{{ocurrence.user_name}}</p>
+                         <div fxLayout="row" >
+                             <p style="margin-right: 16px;"><b>Cidade: </b>{{ocurrence.city}}</p>
+                             <p><b>Bairro: </b>{{ocurrence.neighborhood}}</p>
+                         </div>
+                         <div fxLayout="row" >
+                             <p><b>Rua: </b>{{ocurrence.street}},</p>
+                             <p *ngIf="ocurrence.number">{{ocurrence.number}}</p>
+                         </div>
+                         <p *ngIf="ocurrence.complement"><b>Complemento: </b>{{ocurrence.complement}}</p>
+                         <p><b>Ocorrência: </b>{{ocurrence.type}}</p>
+                         <p><b>Descrição: </b>{{ocurrence.description}}</p>
+                         <div style="width: 100%" fxLayout="row" fxLayoutAlign="end" *ngIf="ocurrence.user_id==user._id || adm">
+                             <button mat-icon-button aria-label="Editar" style="margin-right: 16px; color: #1B9A59" routerLink="editar/{{ocurrence._id}}">
+                                 <mat-icon>edit</mat-icon>
+                             </button>
+                             <button mat-icon-button aria-label="Excluir definitivamento" style="color: #DE3E35" (click)="delete(ocurrence._id)">
+                                 <mat-icon>delete_forever</mat-icon>
+                             </button>
+                         </div>
+                     </mat-card-content>
+                 </mat-card>
+                 <mat-divider></mat-divider>
+             </section>
+             <section  fxLayoutAlign="end" style="margin: 32px 0px">
+                 <button mat-raised-button routerLink="/ocorrencia/novo" color="accent"><mat-icon class="mat-18">add</mat-icon>Nova Ocorrencia</button>
+             </section>
+         </section>
+
+         <section>
+             <h3>Mapa das Ocorrências</h3>
+             <p>map</p>
+         </section>
+     </section>
 
 
-    <section fxLayout="column" style="padding: 16px" *ngIf="ocurrences">
-        <h3>{{title}}</h3>
-        <h4 *ngIf="ocurrences.length == 0">Nenhuma ocorrência na sua Região</h4>
-        <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let ocurrence of ocurrences">
-          <mat-card fxFlex="95%"  fxLayout="row" fxLayoutAlign="space-between start">
-            <mat-card-content fxFlex="100%" fxLayout="column" fxLayoutAlign="space-between start" class="card-content" >
-             <div fxLayout="row" >
-              <p style="margin-right: 16px;">{{ocurrence._id}}</p>              
-              <p >{{ocurrence.ocurred_at | date:'dd/MM/yy HH:mm'}}</p>
-             </div>
-             <p *ngIf="ocurrence.user_name">{{ocurrence.user_name}}</p>
-             <div fxLayout="row" >
-              <p style="margin-right: 16px;"><b>Cidade: </b>{{ocurrence.city}}</p>
-              <p><b>Bairro: </b>{{ocurrence.neighborhood}}</p>
-             </div>     
-             <div fxLayout="row" >
-              <p><b>Rua: </b>{{ocurrence.street}},</p>
-              <p *ngIf="ocurrence.number">{{ocurrence.number}}</p>
-             </div>
-             <p *ngIf="ocurrence.complement"><b>Complemento: </b>{{ocurrence.complement}}</p>
-             <p><b>Ocorrência: </b>{{ocurrence.type}}</p>
-             <p><b>Descrição: </b>{{ocurrence.description}}</p>
-            </mat-card-content> 
-          </mat-card>
-          <mat-divider></mat-divider>
-      </section>
-        <section  fxLayoutAlign="end" style="margin: 32px 0px">
-            <button mat-raised-button routerLink="/ocorrencia/novo" color="accent"><mat-icon class="mat-18">add</mat-icon>Nova Ocorrencia</button>
-        </section>
-    </section>
 
    <app-footer></app-footer>
  </main>

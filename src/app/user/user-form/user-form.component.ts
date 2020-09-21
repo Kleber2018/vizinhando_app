@@ -34,7 +34,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     street: '',
     number: 0,
     complement: '' ,
-    phone: ''
+    phone: '',
   }
   constructor(
       private userService: UserService,

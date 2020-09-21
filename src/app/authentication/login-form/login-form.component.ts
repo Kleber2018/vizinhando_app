@@ -16,6 +16,7 @@ import { EsqueciSenhaDialogComponent } from './esqueci-senha-dialog/esqueci-senh
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
 import {User} from "../../shared/model/user.model";
+import {UserService} from "../../user/user.service";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private location: Location,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private userService: UserService
   ) {
     //construtor: executa ao carregar a página
 
@@ -92,7 +94,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         .then(r => {
           console.log('retorno login', r);
           sessionStorage.setItem('userEquipe2token', JSON.stringify(r));
-          this.router.navigate(['/ocorrencia']);
+          this.carregarDadosUser()
         }).catch(error => {
             console.log('senha inválida', error)
             this.formLogin.get('password').setValue('');
@@ -100,6 +102,23 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         )
     }  catch (e) {}
   }
+
+  carregarDadosUser(){
+          this.userService.buscarUser().then(userRetorno => {
+            console.log('Retornou /me', userRetorno);
+            sessionStorage.setItem('userEquipe2', JSON.stringify(userRetorno));
+            this.router.navigate(['/ocorrencia']);
+          }).catch(error => {
+                if (error.error){
+                  console.log('Retornou Erro:',error.error);
+                } else {
+                  console.log('Retornou Erro:',error);
+                }
+                this.router.navigate(['/ocorrencia']);
+              }
+          )
+  }
+
 
   // chamado pelo botão novo Usuario para direcionar para a pafina de form de usuário
   abrirFormNovoUser(){

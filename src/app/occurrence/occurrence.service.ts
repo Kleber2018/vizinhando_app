@@ -49,7 +49,7 @@ export class OccurrenceService {
       .set('Content-Type', 'application/json')
       .set('Authorization', token.token);
 
-  return this.http.put(`${apiURL}/ocurrences`, occurrence, {headers: headers}).toPromise();
+  return this.http.put(`${apiURL}/ocurrences/${occurrence._id}`, occurrence, {headers: headers}).toPromise();
     }
 
 
@@ -68,7 +68,7 @@ export class OccurrenceService {
                         .set('Content-Type', 'application/json')
                         .set('Authorization', token.token);
 
-      return this.http.get(`${apiURL}/ocurrences`, {headers: headers}).toPromise();
+      return this.http.get(`${apiURL}/ocurrences/${id}`, {headers: headers}).toPromise();
     }
 
 
@@ -90,10 +90,41 @@ export class OccurrenceService {
     }
 
 
+  //requisição get para recuperar array de ocorrências
+  getMyOccurrences() {
+    const apiURL = localStorage.getItem('urlServidor')
+        ? JSON.parse(localStorage.getItem('urlServidor'))
+        : null;
+
+    const token =  sessionStorage.getItem('userEquipe2token')
+        ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
+        : null;
+
+    const headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', token.token);
+
+    return this.http.get(`${apiURL}/ocurrences`, {headers: headers}).toPromise();
+  }
+
+
     //requisição para deletar ocorrências
     deleteOccurrence(id: string) {
       console.log('delete ocorrencia', id)
-      return true
+      const apiURL = localStorage.getItem('urlServidor')
+          ? JSON.parse(localStorage.getItem('urlServidor'))
+          : null;
+
+      const token =  sessionStorage.getItem('userEquipe2token')
+          ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
+          : null;
+
+      const headers = new HttpHeaders()
+          .set('Content-Type', 'application/json')
+          .set('Authorization', token.token)
+          .set('_id', id);
+
+      return this.http.delete(`${apiURL}/ocurrences/${id}`, {headers: headers}).toPromise();
     }
 
 }
