@@ -83,6 +83,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
   //Carregando com dados da ocorrencia para alteração
   private buildFormOcurrenceUpdate(buildOcurrence: Occurrence): void {
+    console.log(buildOcurrence)
     this.formOcurrence = this.formBuilder.group({
       description: buildOcurrence.description ,
       zip_code: [buildOcurrence.zip_code, [ Validators.required]] ,

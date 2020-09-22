@@ -49,7 +49,9 @@ export class OccurrenceService {
       .set('Content-Type', 'application/json')
       .set('Authorization', token.token);
 
-  return this.http.put(`${apiURL}/ocurrences/${occurrence._id}`, occurrence, {headers: headers}).toPromise();
+      let param: any = {'id': occurrence._id};
+
+  return this.http.put(`${apiURL}/ocurrences`, occurrence, { params: param, headers: headers}).toPromise();
     }
 
 
@@ -68,7 +70,9 @@ export class OccurrenceService {
                         .set('Content-Type', 'application/json')
                         .set('Authorization', token.token);
 
-      return this.http.get(`${apiURL}/ocurrences/${id}`, {headers: headers}).toPromise();
+      let param: any = {'id': id};
+
+      return this.http.get(`${apiURL}/ocurrences`, { params: param, headers: headers}).toPromise();
     }
 
 
@@ -104,7 +108,7 @@ export class OccurrenceService {
         .set('Content-Type', 'application/json')
         .set('Authorization', token.token);
 
-    return this.http.get(`${apiURL}/ocurrences`, {headers: headers}).toPromise();
+    return this.http.get(`${apiURL}/ocurrences/me`, {headers: headers}).toPromise();
   }
 
 
@@ -121,10 +125,11 @@ export class OccurrenceService {
 
       const headers = new HttpHeaders()
           .set('Content-Type', 'application/json')
-          .set('Authorization', token.token)
-          .set('_id', id);
+          .set('Authorization', token.token);
 
-      return this.http.delete(`${apiURL}/ocurrences/${id}`, {headers: headers}).toPromise();
+      let param: any = {'id': id};
+
+      return this.http.delete(`${apiURL}/ocurrences`, {params: param, headers: headers}).toPromise();
     }
 
 }

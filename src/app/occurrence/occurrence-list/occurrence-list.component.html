@@ -4,7 +4,7 @@
          <section fxLayout="column" style="padding: 16px" *ngIf="ocurrences" fxFlex="100%" fxFlex.sm="50%" fxFlex.md="50%" fxFlex.lg="50%">
              <div fxLayout="row" fxLayoutAlign="space-between center">
                  <h3>{{title}}</h3>
-                 <mat-checkbox [formControl]="formCheckboxMinhasOcorrencias" (click)="buildMyOccurrences()">Minhas</mat-checkbox>
+                 <mat-checkbox [formControl]="formCheckboxMinhasOcorrencias" (click)="verMinhasOcorrencias()">Minhas</mat-checkbox>
              </div>
              <h4 *ngIf="ocurrences.length == 0">Nenhuma ocorrência na sua Região</h4>
              <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="space-between"  *ngFor="let ocurrence of ocurrences">

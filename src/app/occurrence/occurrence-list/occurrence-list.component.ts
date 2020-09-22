@@ -69,7 +69,7 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
   //carregando lista de ocorrencias do banco
   buildOccurrences(){
       this.occurrenceService.getOccurrences().then(occurrencesRetorno => {
-        console.log('Retornou Occurrences', occurrencesRetorno);
+        console.log('Retornou Todas Occurrences', occurrencesRetorno);
         this.ocurrences = occurrencesRetorno
             }).catch(error => {
             if (error.error){
@@ -83,7 +83,7 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
     //carregando lista de ocorrencias do banco
     buildMyOccurrences(){
         this.occurrenceService.getMyOccurrences().then(occurrencesRetorno => {
-            console.log('Retornou Occurrences', occurrencesRetorno);
+            console.log('Retornou Minhas Occurrences', occurrencesRetorno);
             this.ocurrences = occurrencesRetorno
         }).catch(error => {
             if (error.error){
@@ -125,6 +125,15 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
     const retorno =  await dialogRefAlert.afterClosed().toPromise();
     return retorno;
   }
+
+    verMinhasOcorrencias(){
+        if(this.formCheckboxMinhasOcorrencias.value){
+            this.buildOccurrences()
+        } else {
+            this.buildMyOccurrences()
+        }
+    }
+
 
 //framework - boas práticas
   ngOnDestroy(): void {
