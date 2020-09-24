@@ -50,7 +50,7 @@ export class OccurrenceService {
           .set('Authorization', token.token);
 
           let param: any = {'id': occurrence._id};
-      return this.http.put(`${apiURL}/ocurrences/${occurrence._id}`, occurrence, { params: param, headers: headers}).toPromise();
+      return this.http.put(`${apiURL}/ocurrences/${occurrence._id}`, occurrence, {headers: headers}).toPromise();
      // return this.http.put(`${apiURL}/ocurrences`, occurrence, { params: param, headers: headers}).toPromise();
     }
 

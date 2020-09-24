@@ -22,6 +22,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
   private end: Subject<boolean> = new Subject();
 
   //instanciando as variáveis
+  public ocurrence: Occurrence;
   public formOcurrence: FormGroup;
   public ocurred_at_data = new FormControl((new Date()),[Validators.required]);
   public ocurred_at_time = new FormControl('01:03', [Validators.required]);
@@ -44,7 +45,13 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
       //buscando dados da ocorrencia que vai ser alterada
       this.occurrenceService.getOccurrence(this.activatedRoute.snapshot.params.id).then(ocurrenceRetorno => {
         console.log('Retornou /ocurrence', ocurrenceRetorno);
-        this.buildFormOcurrenceUpdate(ocurrenceRetorno);
+        if(Array.isArray(ocurrenceRetorno)){
+          this.ocurrence = ocurrenceRetorno[0];
+        } else {
+          this.ocurrence = ocurrenceRetorno;
+        }
+
+        this.buildFormOcurrenceUpdate(this.ocurrence);
       }).catch(error => {
             if (error.error){
               console.log('Retornou Erro:',error.error);
@@ -83,7 +90,6 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
   //Carregando com dados da ocorrencia para alteração
   private buildFormOcurrenceUpdate(buildOcurrence: Occurrence): void {
-    console.log(buildOcurrence)
     this.formOcurrence = this.formBuilder.group({
       description: buildOcurrence.description ,
       zip_code: [buildOcurrence.zip_code, [ Validators.required]] ,
@@ -96,6 +102,8 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
       complement: buildOcurrence.complement
     });
 
+    this.formType.setValue(buildOcurrence.type);
+
    this.formCheckboxAnonymous.setValue(buildOcurrence.anonymous);
   }
 
@@ -106,7 +114,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
     if(this.formOcurrence.valid){ //verificando se todos os campos obrigatórios foram preenchidos
       if(this.activatedRoute.snapshot.params.id){ //se veio um id na url significa que é uma requisição de update
         const ocurrence: Occurrence = this.formOcurrence.value;
-
+        ocurrence._id = this.ocurrence._id;
         //convertendo data e hora
         var dia = this.ocurred_at_data.value.getDate()
         var mes = this.ocurred_at_data.value.getMonth();
@@ -125,7 +133,16 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
         //requisição de update no banco
         this.occurrenceService.updateOccurrence(ocurrence)
             .then(r => {
-          console.log('Atualizado com sucesso a ocorrencia:', r);
+              console.log('Atualizado com sucesso a ocorrencia:', this.ocurrence._id);
+
+              const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+                data: {descricao:"Atualizado com sucesso"}
+              });
+              dialogRefAlert.afterClosed().toPromise().then(() => {
+                this.buildFormOccurrence();
+                this.router.navigate(['/ocorrencia']);
+              })
+
         }).catch(error => {
               if (error.error){
                 console.log('Retornou Erro:',error.error);
@@ -154,7 +171,7 @@ export class OccurrenceFormComponent implements OnInit, OnDestroy {
 
         //requisição de insert no banco
         this.occurrenceService.createOccurrence(ocurrence).then(r => {
-          console.log('Salvo com sucesso nova Ocorrencia:', r);
+          console.log('Salvo com sucesso nova Ocorrencia:');
 
           const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
             data: {descricao:"Salvo com sucesso"}

@@ -95,25 +95,27 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
     }
 
     //chamado pelo botão delete, para deletar e recarregar o array
-    delete(id: string){
-        this.occurrenceService.deleteOccurrence(id).then(deleteRetorno => {
-            console.log('Delete retornou ', deleteRetorno);
-            this.alertaDialog({descricao:"Deletado com Sucesso"}).then(()=> {
-                if(this.formCheckboxMinhasOcorrencias.value){
-                    this.buildMyOccurrences()
-                } else {
-                    this.buildOccurrences()
-                }
-
-            })
-
-        }).catch(error => {
-            if (error.error){
-                console.log('Retornou Erro de Ocorrências:',error.error);
-            } else {
-                console.log('Retornou Erro de Ocorrências:',error);
+    async delete(id: string){
+        const retornoDialog =  await this.alertaDialog({descricao: 'Você tem certeza que deseja excluir a Ocorrência?', opcao1: 'Excluir'});
+        if (retornoDialog) {
+            if (retornoDialog.retorno === 'opcao1') {
+                this.occurrenceService.deleteOccurrence(id).then(deleteRetorno => {
+                    this.alertaDialog({descricao: "Deletado com Sucesso"}).then(() => {
+                        if (this.formCheckboxMinhasOcorrencias.value) {
+                            this.buildMyOccurrences()
+                        } else {
+                            this.buildOccurrences()
+                        }
+                    })
+                }).catch(error => {
+                    if (error.error) {
+                        console.log('Retornou Erro de Ocorrências:', error.error);
+                    } else {
+                        console.log('Retornou Erro de Ocorrências:', error);
+                    }
+                })
             }
-        })
+        }
     }
 
 
