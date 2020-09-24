@@ -33,25 +33,25 @@ export class OccurrenceService {
   }
 
 
-    //requisição PUT para alterar ocorrência
-    updateOccurrence(occurrence: Occurrence) {
+  //requisição PUT para alterar ocorrência
+  updateOccurrence(occurrence: Occurrence) {
       console.log('update ocorrencia', occurrence)
 
       const apiURL = localStorage.getItem('urlServidor')
       ? JSON.parse(localStorage.getItem('urlServidor'))
       : null;
 
-  const token =  sessionStorage.getItem('userEquipe2token')
-      ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
-      : null;
+      const token =  sessionStorage.getItem('userEquipe2token')
+          ? JSON.parse(sessionStorage.getItem('userEquipe2token'))
+          : null;
 
-  const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', token.token);
+      const headers = new HttpHeaders()
+          .set('Content-Type', 'application/json')
+          .set('Authorization', token.token);
 
-      let param: any = {'id': occurrence._id};
-
-  return this.http.put(`${apiURL}/ocurrences`, occurrence, { params: param, headers: headers}).toPromise();
+          let param: any = {'id': occurrence._id};
+      return this.http.put(`${apiURL}/ocurrences/${occurrence._id}`, occurrence, { params: param, headers: headers}).toPromise();
+     // return this.http.put(`${apiURL}/ocurrences`, occurrence, { params: param, headers: headers}).toPromise();
     }
 
 
@@ -72,7 +72,7 @@ export class OccurrenceService {
 
       let param: any = {'id': id};
 
-      return this.http.get(`${apiURL}/ocurrences`, { params: param, headers: headers}).toPromise();
+      return this.http.get(`${apiURL}/ocurrences/${id}`, {headers: headers}).toPromise();
     }
 
 
@@ -129,7 +129,8 @@ export class OccurrenceService {
 
       let param: any = {'id': id};
 
-      return this.http.delete(`${apiURL}/ocurrences`, {params: param, headers: headers}).toPromise();
+      //return this.http.delete(`${apiURL}/ocurrences`, {params: param, headers: headers}).toPromise();
+      return this.http.delete(`${apiURL}/ocurrences/${id}`, {headers: headers}).toPromise();
     }
 
 }
