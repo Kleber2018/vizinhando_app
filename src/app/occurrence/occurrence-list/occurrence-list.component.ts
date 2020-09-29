@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/alert-dialog/alert-dialog.component';
 import {User} from "../../shared/model/user.model";
 import {FormControl} from "@angular/forms";
+import {isBoolean} from "util";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
   private end: Subject<boolean> = new Subject(); 
 
   public title = 'Lista de Ocorrências';
-  public ocorrencias = [{status: 22}, {status: 33},{status: 22}, {status: 33}];
+  public minhasOcorrencias = false;
   public ocurrences: any;
   public adm: boolean = false;
 
@@ -68,6 +69,7 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
 
   //carregando lista de ocorrencias do banco
   buildOccurrences(){
+        this.minhasOcorrencias = false
       this.occurrenceService.getOccurrences().then(occurrencesRetorno => {
         console.log('Retornou Todas Occurrences', occurrencesRetorno);
         this.ocurrences = occurrencesRetorno
@@ -82,9 +84,14 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
 
     //carregando lista de ocorrencias do banco
     buildMyOccurrences(){
+        this.minhasOcorrencias = true
         this.occurrenceService.getMyOccurrences().then(occurrencesRetorno => {
             console.log('Retornou Minhas Occurrences', occurrencesRetorno);
-            this.ocurrences = occurrencesRetorno
+            if(occurrencesRetorno){
+                this.ocurrences = occurrencesRetorno
+            } else {
+                this.ocurrences = [];
+            }
         }).catch(error => {
             if (error.error){
                 console.log('Retornou Erro de Ocorrências:',error.error);
@@ -119,28 +126,29 @@ export class OccurrenceListComponent implements OnInit, OnDestroy {
     }
 
 
-  // para abrir dialog de alerta
-  async alertaDialog(data: any) { //{descricao:"textoi"}
-    const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
-      data
-    });
-    const retorno =  await dialogRefAlert.afterClosed().toPromise();
-    return retorno;
-  }
+      // para abrir dialog de alerta
+      async alertaDialog(data: any) { //{descricao:"textoi"}
+        const dialogRefAlert = this.dialog.open(AlertDialogComponent, {
+          data
+        });
+        const retorno =  await dialogRefAlert.afterClosed().toPromise();
+        return retorno;
+      }
 
-    verMinhasOcorrencias(){
-        if(this.formCheckboxMinhasOcorrencias.value){
-            this.buildOccurrences()
-        } else {
-            this.buildMyOccurrences()
+      //chamado quando o checkbox minhas ocorrencias for marcada
+        verMinhasOcorrencias(){
+            if(this.formCheckboxMinhasOcorrencias.value){
+                this.buildOccurrences()
+            } else {
+                this.buildMyOccurrences()
+            }
         }
-    }
 
 
-//framework - boas práticas
-  ngOnDestroy(): void {
-    this.end.next();
-    this.end.complete();
-  }
+    //framework - boas práticas
+      ngOnDestroy(): void {
+        this.end.next();
+        this.end.complete();
+      }
 }
 

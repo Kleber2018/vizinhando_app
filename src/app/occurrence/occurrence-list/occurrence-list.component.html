@@ -26,7 +26,7 @@
                          <p *ngIf="ocurrence.complement"><b>Complemento: </b>{{ocurrence.complement}}</p>
                          <p><b>Ocorrência: </b>{{ocurrence.type}}</p>
                          <p><b>Descrição: </b>{{ocurrence.description}}</p>
-                         <div style="width: 100%" fxLayout="row" fxLayoutAlign="end" *ngIf="ocurrence.user_id==user._id || adm">
+                         <div style="width: 100%" fxLayout="row" fxLayoutAlign="end" *ngIf="ocurrence.user_id==user._id || adm || minhasOcorrencias">
                              <button mat-icon-button aria-label="Editar"  style="margin-right: 16px; color: #1B9A59" routerLink="editar/{{ocurrence._id}}">
                                  <mat-icon>edit</mat-icon>
                              </button>
